@@ -29,6 +29,29 @@
 
 #show heading: set par(justify: true)
 
+// // Render figure supplement when there is no caption.
+// #show figure: it => {
+//   if it.caption == none {
+//     it.body
+//     // v(it.gap)
+//     text(weight: "bold")[
+//       #it.supplement
+//       #counter(figure.where(kind: it.kind)).display(it.numbering)
+//     ]
+//   } else {
+//     it
+//   }
+// }
+
+// Show just supplement (no colon) if caption is empty.
+#show figure.caption: it => [
+  #if it.body == [] {
+    block[#strong([Figure #it.counter.display(it.numbering)])]
+  } else {
+    block[#strong([Figure #it.counter.display(it.numbering) —]) #it.body]
+  }
+]
+
 #let justify-multiline(body, font-size: 5mm) = layout(size => context {
   let lines = str(body).split("\n").map(l => l.trim()).filter(l => l != "")
 
@@ -118,7 +141,7 @@
 #align(center)[
 // #scale(70%, reflow: true)[
     #image(
-        "assets/8609007543340486758_gs005_th.jpg",
+        "assets/white_pigskin.jpg",
         fit: "contain",
         width: 80%,
 )]
@@ -136,12 +159,12 @@
 THE CARE OF BOOKS", font-size: 21pt)
 
 #justify-multiline("
-  A HANDBOOK FOR AMATEURS
-  BOOKBINDERS & LIBRARIANS
-  BY DOUGLAS COCKERELL
-  WITH
-  DRAWINGS BY NOEL ROOKE
-  AND OTHER ILLUSTRATIONS
+A HANDBOOK FOR AMATEURS
+BOOKBINDERS & LIBRARIANS
+BY DOUGLAS COCKERELL
+WITH
+DRAWINGS BY NOEL ROOKE
+AND OTHER ILLUSTRATIONS
 ")
 
 
@@ -150,7 +173,7 @@ THE CARE OF BOOKS", font-size: 21pt)
 #align(center)[
     #scale(60%, reflow: true)[
         #image(
-            "assets/8609007543340486758_tp01.jpg",
+            "assets/publisher_logo.jpg",
             fit: "contain",
             alt: "publisher_logo",
         )
@@ -160,17 +183,17 @@ THE CARE OF BOOKS", font-size: 21pt)
 #v(2em)
 
 #text(0.7em)[
-#align(center)[NEW YORK \ D. APPLETON AND COMPANY \ 1910]
+  #align(center)[NEW YORK \ D. APPLETON AND COMPANY \ 1910]
 ]
 
 #v(1em)
 
 #text(0.7em)[
-#align(center)[
-  #smallcaps[Copyright, 1901, \ By D. Appleton and Company]
-  #v(2em)
-  #emph[All rights reserved]
-]
+  #align(center)[
+    #smallcaps[Copyright, 1901, \ By D. Appleton and Company]
+    #v(2em)
+    #emph[All rights reserved]
+  ]
 ]
 
 #pagebreak()
@@ -433,12 +456,13 @@ across the back of the book.
 #align(center)[
   #figure(
     image(
-      "assets/8609007543340486758_gs026.jpg",
+      "assets/fig1.jpg",
       fit: "contain",
       alt: "Fig. 1.",
       width: 90%,
     ),
-    caption: [Fig. 1.]
+    // caption: [Fig. 1.],
+    caption: [],
   )<fig1>
 ]
 
@@ -677,22 +701,24 @@ Thus, a folio is made up of sheets of paper folded once down the centre, forming
 two leaves and four pages.
 The sheets of a quarto have a second fold, making four leaves and eight pages,
 and in an octavo the sheet has a third fold, forming eight leaves and sixteen
-pages (see #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_2")[fig. 2] ),
-and so on.
+pages (see @fig2[fig. 2]), and so on.
 Each sheet of paper when folded constitutes a section, except in the case of
 folios, where it is usual to make up the sections by inserting two or more
 sheets, one within the other.
 
 Paper is made in several named sizes, such as “imperial,” “royal,” “demy,”
 “crown,” “foolscap,” &c.
-(see p. #link("8523092203054335333_26672-h-2.htm.xhtml#Page_283")[283] ),
+(see p. #link("8523092203054335333_26672-h-2.htm.xhtml#Page_283")[283]),
 so that the terms “imperial folio” or “crown octavo” imply that a sheet of a
 definite size has been folded a definite number of times.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs038.jpg", fit: "contain", alt: "Fig. 2.")
+  #figure(
+    image("assets/fig2.jpg", fit: "contain", alt: "Fig. 2."),
+    // caption: [Fig. 2],
+    caption: [],
+  )<fig2>
 ]
-#align(center)[Fig. 2.]
 
 Besides the traditional sizes, paper is now made of almost any length and width,
 resulting in books of odd shape, and the names folio, quarto, &c., are rather
@@ -709,8 +735,7 @@ The “outer” sides, known by the signature letters B, C, D, &c., should be
 downwards, and the inner sides facing upwards with the second signatures, if
 there are any, B2, C2, D2, &c., at the right\-hand bottom corner.
 
-The pages of an octave book, commencing at page 1, are shown at
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_3")[fig. 3] .
+The pages of an octave book, commencing at page 1, are shown at @fig3[fig. 3].
 A folder is taken in the right hand, and held at the bottom of the sheet at
 about the centre, and the sheet taken by the left hand at the top right\-hand
 corner and bent over until pages 3 and 6 come exactly over pages 2 and 7; and
@@ -726,24 +751,23 @@ If the folding has been done carefully, and the “register” of the printing i
 good, the headlines should be exactly even throughout.
 
 #align(center)[
-  #link("8609007543340486758_gs040.jpg.id-8852751844829996391.wrap-0.html.xhtml")[
-    #image(
-      "assets/8609007543340486758_gs040_th.jpg",
+  #figure(
+    image(
+      "assets/fig3.jpg",
       fit: "contain",
       alt: "Fig. 3.",
       width: 70%,
-    )
-  ]
+    ),
+    // caption: [#smallcaps[Fig.]  3],
+    caption: [],
+  )<fig3>
 ]
-
-#align(center)[#smallcaps[Fig.]  3.]
 
 The object of cutting past the centre at each fold is to avoid the unsightly
 creasing that results from folding two or more thicknesses of paper when joined
 at the top edge.
 
-A “duodecimo” sheet has the pages arranged as at
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_4")[fig. 4] .
+A “duodecimo” sheet has the pages arranged as at @fig4[fig. 4].
 
 The “inset” pages, 10, 15, 14, 11, must be cut off, and the rest of the section
 folded as for an octavo sheet.
@@ -756,8 +780,7 @@ sheet having been mastered, no difficulty will be found in folding any other.
 Plates often require trimming, and this must be done with judgment.
 The plates should be trimmed to correspond as far as possible with the printing
 on the opposite page, but if this cannot be done, it is desirable that something
-approaching the proportion of margin shown at
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_2")[fig. 2] (folio)
+approaching the proportion of margin shown at @fig2[fig. 2] (folio)
 should be aimed at.
 That is to say, the back margin should be the smallest, the head margin the
 next, the fore\-edge a little wider, and the tail widest of all.
@@ -766,17 +789,17 @@ it looks better if it is put a little higher and a little nearer the back than
 the actual centre.
 
 #align(center)[
-  #link("8609007543340486758_gs042.jpg.id-7800675904244100836.wrap-0.html.xhtml")[
-    #image(
-      "assets/8609007543340486758_gs042_th.jpg",
+  #figure(
+    image(
+      "assets/fig4.jpg",
       fit: "contain",
       alt: "Fig. 4.",
       width: 70%,
-    )
-  ]
+    ),
+    // caption: [#smallcaps[Fig.] 4],
+    caption: [],
+  )<fig4>
 ]
-
-#align(center)[#smallcaps[Fig.] 4.]
 
 Plates that have no numbers on them must be put in order by the list of printed
 plates, or “instructions to the binder.”
@@ -834,7 +857,7 @@ the pages with it.
 When this is done the thumb is placed on page 1, and the hand twisted, so as to
 fan out the top of the pages.
 They can then be readily turned over by the thumb and first finger of the left
-hand (see #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_5")[fig. 5] ).
+hand (see @fig5[fig. 5]).
 This is repeated throughout the book, taking about fifty pages at a time.
 It will of course only be necessary to check the odd numbers, as if they are
 right, the even ones on the other side of the leaf must be so.
@@ -842,9 +865,12 @@ If the pages are numbered at the foot, the leaves must be fanned out from the
 head.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs046.jpg", fit: "contain", alt: "Fig. 5.")
+  #figure(
+    image("assets/fig5.jpg", fit: "contain", alt: "Fig. 5."),
+    // caption: [Fig. 5],
+    caption: [],
+  )<fig5>
 ]
-#align(center)[Fig. 5.]
 
 Plates or maps that are not paged can only be checked from the printed list.
 When checked it will save time if the number of the page which each faces is
@@ -954,12 +980,15 @@ process, makes a hopelessly stiff back, and no book so treated can open freely.
 #heading(level: 5)[REFOLDING]
 
 #align(right)[
-  #image(
-    "assets/8609007543340486758_gs052.jpg",
-    fit: "contain",
-    alt: "Fig. 6. — Dividers",
-  )
-  #align(center)[Fig. 6. — Dividers]
+  #figure(
+    image(
+      "assets/fig6.jpg",
+      fit: "contain",
+      alt: "Fig. 6. — Dividers",
+    ),
+    // caption: [Fig. 6 — Dividers],
+    caption: [Dividers],
+  )<fig6>
 ]
 
 When the sheets of books that have to be rebound have been carelessly folded, a
@@ -971,13 +1000,11 @@ The folding of the whole book may be corrected by taking each pair of leaves and
 holding them up to the light and adjusting the fold so that the print on one
 leaf comes exactly over the print on the other, and creasing the fold to make
 them stay in that position.
-With a pair of dividers
-(#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_6")[fig.6])
+With a pair of dividers (@fig6[fig.6])
 set to the height of the shortest top margin, points the same distance
 above the headline of the other leaves can be made.
 Then against a carpenter’s square, adjusted to the back of the fold, the head of
-one pair of leaves at a time can be cut square
-(see #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_7")[fig. 7]).
+one pair of leaves at a time can be cut square (see @fig7[fig. 7]).
 If the book has been previously cut this process is apt to throw the leaves so
 far out of their original position as to make them unduly uneven.
 
@@ -991,8 +1018,11 @@ It is better to leave a plate short at tail or fore\-edge than to leave it out
 of square.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs053.jpg", fit: "contain", alt: "Fig. 7.")
-  #align(center)[Fig. 7.]
+  #figure(
+    image("assets/fig7.jpg", fit: "contain", alt: "Fig. 7."),
+    // caption: [Fig. 7],
+    caption: [],
+  )<fig7>
 ]
 
 #heading(level: 5)[KNOCKING OUT JOINTS]
@@ -1020,13 +1050,14 @@ face must be perfectly clean, or the sheets may be soiled.
 #smallcaps[Guards] are slips of thin paper or linen used for strengthening the
 fold of leaves that are damaged, or for attaching plates or single leaves.
 
-#image("assets/8609007543340486758_gs055.jpg", fit: "contain", alt: "Fig. 8.")
-#align(center)[Fig. 8.]
+#figure(
+  image("assets/fig8.jpg", fit: "contain", alt: "Fig. 8."),
+  caption: [Fig. 8],
+)<fig8>
 
 Guards should be of good thin paper.
 That known as Whatman’s Banknote paper answers very well.
-An easy way to cut guards is shown in
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_8")[fig. 8] .
+An easy way to cut guards is shown in @fig8[fig. 8].
 Two or three pieces of paper of the height of the required guards are folded and
 pinned to the board by the right\-hand corners.
 A series of points are marked at the head and tail with dividers set to the
@@ -1034,35 +1065,38 @@ width desired for the guards, and with a knife guided by a straight\-edge, cuts
 joining the points are made right through the paper, but not extending quite to
 either end.
 On a transverse cut being made near the bottom, the guards are left attached by
-one end only
-(see #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_9")[fig. 9] ),
-and can be torn off as wanted.
+one end only (see @fig9[fig. 9]), and can be torn off as wanted.
 This method prevents the paper from slipping while it is being cut.
 
-#align(right)[ #image("assets/8609007543340486758_gs055a.jpg", fit: "contain", alt: "Fig. 9.")
-#align(
-    center,
-  )[Fig. 9.]]
+#align(right)[
+  #figure(
+    image("assets/fig9.jpg", fit: "contain", alt: "Fig. 9."),
+    // caption: [Fig. 9],
+    caption: [],
+  )<fig9>
+]
 
-A mount cutter’s knife (
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_10")[fig. 10] )
-will be found to be a convenient form of knife to use for cutting guards.
+A mount cutter’s knife (@fig10[fig. 10]) will be found to be a convenient form
+of knife to use for cutting guards.
 
 In using the knife and straight\-edge a good deal of pressure should be put on
 the straight\-edge, and comparatively little on the knife.
 
 #align(center)[
-  #image(
-    "assets/8609007543340486758_gs056.jpg",
-    fit: "contain",
-    alt: "Fig. 10. — Mount Cutter’s Knife",
-  )
-  #align(center)[Fig. 10. — Mount Cutter’s Knife]
+  #figure(
+    image(
+      "assets/fig10.jpg",
+      fit: "contain",
+      alt: "Fig. 10. — Mount Cutter’s Knife",
+    ),
+    // caption: [Fig. 10 — Mount Cutter’s Knife],
+    caption: [Mount Cutter’s Knife],
+  )<fig10>
 ]
 
 To mend the torn back of a pair of leaves, a guard should be selected a little
 longer than the height of the pages and well pasted with white paste (see page
-#link("8523092203054335333_26672-h-2.htm.xhtml#Page_288")[288] ).
+#link("8523092203054335333_26672-h-2.htm.xhtml#Page_288")[288]).
 If the pair of leaves are not quite separated, the pasted guard held by its
 extremities may be simply laid along the weak place and rubbed down through
 blotting\-paper.
@@ -1077,20 +1111,21 @@ In handling the pasted guards care is needed not to stretch them, or they may
 cause the sheet to crinkle as they dry.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs057.jpg", fit: "contain", alt: "Fig. 11.")
-  #align(center)[Fig. 11.]
+  #figure(
+    image("assets/fig11.jpg", fit: "contain", alt: "Fig. 11."),
+    // caption: [Fig. 11],
+    caption: [],
+  )<fig11>
 ]
 
 Plates must be guarded round the sections next them.
 When there are a great many plates the back margin of each, to which a guard
-will be attached, must be pared (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_11")[fig. 11] , A),
+will be attached, must be pared (see @fig11[fig. 11], A),
 or the additional thickness caused by the guards will make the back
 swell unduly.
 In guarding plates a number can be pasted at once if they are laid one on
 another, with about an eighth of an inch of the back of each exposed, the top of
-the pile being protected by a folded piece of waste paper (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_12")[fig. 12] ).
+the pile being protected by a folded piece of waste paper (see @fig12[fig. 12]).
 To paste, the brush is brought from the top to the bottom of the pile only, and
 not the other way, or paste will get between the plates and soil them.
 Guards should usually be attached to the backs of plates, and should be wide
@@ -1100,18 +1135,19 @@ and slightly pasted to the inside of the sheet and then sewn through in the
 ordinary way.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs058.jpg", fit: "contain", alt: "Fig. 12.")
-  #align(center)[Fig. 12.]
+  #figure(
+    image("assets/fig12.jpg", fit: "contain", alt: "Fig. 12."),
+    // caption: [Fig. 12],
+    caption: [],
+  )<fig12>
 ]
 
-If plates are very thick, they must be hinged, as shown at
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_11")[fig. 11] , B.
+If plates are very thick, they must be hinged, as shown at @fig11[fig. 11], B.
 This is done by cutting a strip of about a quarter of an inch off the back of
 the plate, and guarding with a wide guard of linen, leaving a small space
 between the plate and the piece cut off to form a hinge.
 It will save some swelling if the plate is pared and a piece of thinner paper
-substituted for the piece cut off (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_11")[fig. 11] , C).
+substituted for the piece cut off (see @fig11[fig. 11], C).
 If the plates are of cardboard, they should be guarded on both sides with linen,
 and may even need a second joint.
 
@@ -1121,11 +1157,14 @@ In books in which there are a great many plates, it is often found that two
 plates either come together in the centre of a section, or come at opposite
 sides of the same pair of leaves.
 Such plates should be guarded together and treated as folded sheets (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_13")[fig. 13] ).
+@fig13[fig. 13]).
 
 #align(center)[
-  #image("assets/8609007543340486758_gs059.jpg", fit: "contain", alt: "Fig. 13.")
-  #align(center)[Fig. 13.]
+  #figure(
+    image("assets/fig13.jpg", fit: "contain", alt: "Fig. 13."),
+    // caption: [Fig. 13],
+    caption: [],
+  )<fig13>
 ]
 
 In order to be sure that the pages of a book to be guarded throughout will come
@@ -1167,19 +1206,19 @@ reduce the swelling of the back caused by the guards.
 
 #figure(
   image(
-    "assets/8609007543340486758_gs061.jpg",
+    "assets/fig14.jpg",
     fit: "contain",
     alt: "Fig. 14.",
     height: 70%,
   ),
-  caption: [Fig. 14.],
+  // caption: [Fig. 14],
+  caption: [],
 )<fig14>
 
 Maps or diagrams that are frequently referred to in the text of a book, should
 be “thrown out” on a guard as wide as the sheet of the book.
 Such maps, &c., should be placed at the end, so that they may lie open for
-reference while the book is being read (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_14")[fig. 14] ).
+reference while the book is being read (see @fig14[fig. 14]).
 Large folded maps or diagrams should be mounted on linen.
 To do this take a piece of jaconet and pin it out flat on the board, then evenly
 paste the back of the map with thin paste in which there are no lumps, and lay
@@ -1191,13 +1230,16 @@ separate pieces mounted on the linen, with a slight space between them to form a
 flexible joint.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs062.jpg", fit: "contain", alt: "Fig. 15.")
-  #align(center)[Fig. 15.]
+  #figure(
+    image("assets/fig15.jpg", fit: "contain", alt: "Fig. 15."),
+    // caption: [Fig. 15],
+    caption: [],
+  )<fig15>
 ]
 
 A folded map must have in the back of the book sufficient guards to equal it in
 thickness at its thickest part when folded, or the book will not shut properly
-(see #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_15")[fig. 15] ).
+(see @fig15[fig. 15]).
 
 #heading(level: 5)[PARING PAPER]
 
@@ -1254,8 +1296,11 @@ floats off.
 
 #heading(level: 5)[INLAYING LEAVES OR PLATES]
 
-#image("assets/8609007543340486758_gs065.jpg", fit: "contain", alt: "Fig. 16.")
-#align(center)[Fig. 16.]
+#figure(
+  image("assets/fig16.jpg", fit: "contain", alt: "Fig. 16."),
+  // caption: [Fig. 16],
+  caption: [],
+)<fig16>
 
 When a small plate or leaf has to be inserted into a larger book, it is best to
 “inlay it”; that is to say, the plate or leaf is let into a sheet of paper the
@@ -1264,8 +1309,7 @@ To do this, a piece of paper as thick as the plate to be inlaid, or a little
 thicker, is selected, and on this is laid the plate, which should have been
 previously squared, and the positions of the corners marked with a folder.
 A point is made about an eighth of an inch inside each corner mark, and the
-paper within these points is cut out (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_16")[fig. 16] ).
+paper within these points is cut out (see @fig16[fig. 16]).
 This leaves a frame of paper, the inner edges of which will slightly overlap the
 edges of the plate.
 The under edge of the plate, and the upper edge of the mount, should then be
@@ -1331,8 +1375,10 @@ This is generally because the size has perished, and such paper can often be
 made perfectly sound by resizing.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs069.jpg", fit: "contain", alt: "Fig. 17.")
-  #align(center)[Fig. 17.]
+  #figure(
+    image("assets/fig17.jpg", fit: "contain", alt: "Fig. 17."),
+    caption: [Fig. 17],
+  )<fig17>
 ]
 
 For size, an ounce of isinglass or good gelatine is dissolved in a quart of
@@ -1343,8 +1389,7 @@ Care must be taken not to heat too quickly, or the solution may burn and turn
 brown.
 If the size is not quite clear, it should be strained through fine muslin or
 linen before being used.
-When it is ready it should be poured into an open pan
-(#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_17")[fig. 17]),
+When it is ready it should be poured into an open pan (@fig17[fig. 17]),
 so arranged that it can be kept warm by a gas flame or spirit lamp underneath.
 When this is ready the sheets to be sized can be put in one after another and
 taken out at once.
@@ -1565,8 +1610,11 @@ paper in those places.
 It is a very tedious operation, and seldom worth doing.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs080.jpg", fit: "contain", alt: "Fig. 18.")
-  #align(center)[Fig. 18.]
+  #figure(
+    image("assets/fig18.jpg", fit: "contain", alt: "Fig. 18."),
+    // caption: [Fig. 18],
+    caption: [],
+  )<fig18>
 ]
 
 Mending vellum is done in much the same way as mending paper, excepting that a
@@ -1576,7 +1624,7 @@ depend on paste alone holding vellum securely.
 The overlapping edges must be well roughed up with a knife to make sure that the
 paste will stick.
 A cut in a vellum page is best mended with fine silk with a lacing stitch (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_18")[fig. 18]).
+@fig18[fig. 18]).
 
 Mending is most easily done on a sheet of plate\-glass, of which the edges and
 corners have been rubbed down.
@@ -1613,20 +1661,18 @@ back, and it fails in the object aimed at, by merely transferring the strain to
 the back of the overcast section.
 
 In order to make provision for any strain there may be in opening the cover, it
-is better to adopt some such arrangement as shown in
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_19")[fig. 19].
+is better to adopt some such arrangement as shown in @fig19[fig. 19].
 In this end paper the zigzag opens slightly in response to any strain.
 
 The way to make this end paper is to take a folded sheet of paper a little
 larger than the book.
 Then with dividers mark two points an eighth of an inch from the back for the
 fold, and paste your paste\-down paper, B B, up to these points (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_19")[fig. 19] , II).
+@fig19[fig. 19], II).
 When the paste is dry, fold back the sheet (A1) over the paste\-down paper, and
 A2 the reverse way, leaving the form seen in
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_19")[fig. 19], III.
-A folded sheet of paper similar to A is inserted at C (
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_19")[fig. 19], V, H),
+@fig19[fig. 19], III.
+A folded sheet of paper similar to A is inserted at C (@fig19[fig. 19], V, H),
 and the sewing passes through this.
 When the book is pasted down the leaf A1 is torn off, and B1 pasted down on the
 board.
@@ -1634,14 +1680,15 @@ If marbled paper is desired, the marble should be “made,” that is, pasted on
 B1.
 
 #align(center)[
-  #link("8609007543340486758_gs083.jpg.id-3309240288516365637.wrap-0.html.xhtml")[
-    #image(
-      "assets/8609007543340486758_gs083_th.jpg",
+  #figure(
+    image(
+      "assets/fig19.jpg",
       fit: "contain",
-    )
-  ]
+    ),
+    // caption: [#smallcaps[Fig.] 19],
+    caption: [],
+  )<fig19>
 ]
-#align(center)[#smallcaps[Fig.] 19.]
 
 There are considerable disadvantages in using marbled papers, as if they are of
 thick enough paper to help the strength of the binding, the “made” sheet is very
@@ -1666,8 +1713,7 @@ especially those that aim at pictorial effect, are seldom successful.
 Ends may be made of thin vellum.
 If so, unless the board is very heavy, it is best to have leather joints.
 
-A single leaf of vellum (in the place of B1 and 2, II,
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_19")[fig. 19] )
+A single leaf of vellum (in the place of B1 and 2, II, @fig19[fig. 19])
 should have an edge turned up into the zigzag with the leather joint, and
 sewn through.
 Vellum ends must always be sewn, as it is not safe to rely upon paste to hold
@@ -1683,9 +1729,7 @@ a zigzag made of Japanese paper.
 
 Silk or other fine woven material may be used for ends.
 It is best used with a leather joint, and may be stuck on to the first paper of
-the end papers (B1, No.
-2, #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_19")[fig. 19] ),
-and cut with the book.
+the end papers (B1, No. 2, @fig19[fig. 19]), and cut with the book.
 The glaire of the edge gilding will help to stop the edges fraying out.
 In attaching silk to paper, thin glue is the best thing to use; the paper, not
 the silk, being glued.
@@ -1718,8 +1762,7 @@ inside of the board.
 
 If there are to be leather joints, the end papers are made up without A 1, and
 the edge of the leather pasted and inserted at D, with a piece of common paper
-as a protection (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_19")[fig. 19] , IV).
+as a protection (see @fig19[fig. 19], IV).
 When the paste is dry, the leather is folded over at E.
 
 A piece of blotting\-paper may be pasted on to the inside of the waste leaf,
@@ -1739,15 +1782,23 @@ With leather or cloth joints, the sewing should go through both E and F.
 #heading(level: 5)[PRESSING]
 
 #align(center)[
-  #image("assets/8609007543340486758_gs088.jpg", fit: "contain", alt: "Fig. 20.")
-  #align(center)[Fig. 20.] ]
+  #figure(
+    image("assets/fig20.jpg", fit: "contain", alt: "Fig. 20."),
+    // caption: [Fig. 20],
+    caption: [],
+  )<fig20>
+]
 
-#align(center)[ #image(
-    "assets/8609007543340486758_gs089.jpg",
-    fit: "contain",
-    alt: "Fig. 21. — Standing Press",
-  )
-  #align(center)[Fig. 21. — Standing Press]
+#align(center)[
+  #figure(
+    image(
+      "assets/fig21.jpg",
+      fit: "contain",
+      alt: "Fig. 21. — Standing Press",
+    ),
+    // caption: [Fig. 21. — Standing Press],
+    caption: [Standing Press],
+  )<fig21>
 ]
 
 While the end papers are being made, the sections of the book should be pressed.
@@ -1755,7 +1806,7 @@ To do this a pressing\-board is taken which is a little larger than the book,
 and a tin, covered with common paper, placed on that, then a few sections of the
 book, then another tin covered with paper, and then more sections, and so on,
 taking care that the sections are exactly over one another (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_20")[fig. 20] ).
+@fig20[fig. 20]).
 A second pressing\-board having been placed on the last tin, the pile of
 sections, tins, and pressing\-boards can be put into the standing\-press and
 left under pressure till next day.
@@ -1766,12 +1817,15 @@ or have tins placed on each side of them to prevent them from indenting the
 adjoining leaves.
 
 #align(center)[
-  #image(
-    "assets/8609007543340486758_gs090.jpg",
-    fit: "contain",
-    alt: "Fig. 22. — French Standing Press",
-  )
-  #align(center)[Fig. 22. — French Standing Press]
+  #figure(
+    image(
+      "assets/fig22.jpg",
+      fit: "contain",
+      alt: "Fig. 22. — French Standing Press",
+    ),
+    // caption: [Fig. 22. — French Standing Press],
+    caption: [French Standing Press],
+  )<fig22>
 ]
 
 Hand\-printed books, such as the publications of the Kelmscott Press, should
@@ -1792,16 +1846,15 @@ This process has been superseded by the rolling\-press; but with the admirable
 presses that are now to be had, simple pressing will be found to be sufficient
 for the “extra” binder.
 
-At #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_21")[fig. 21]
-is shown an iron standing\-press.
+At @fig21[fig. 21] is shown an iron standing\-press.
 This is screwed down first with a short bar, and finally with a long bar.
 This form of press is effective and simple, but needs a good deal of room for
 the long bar, and must have very firm supports, or it may be pulled over.
 
-At #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_22")[fig. 22]
-is shown a French standing\-press, in which the pressure is applied by a
-weighted wheel, which will, in the first place, by being spun round, turn the
-screw until it is tight, and give additional pressure by a hammering action.
+At @fig22[fig. 22] is shown a French standing\-press, in which the pressure is
+applied by a weighted wheel, which will, in the first place, by being spun
+round, turn the screw until it is tight, and give additional pressure by a
+hammering action.
 This press I have found to answer for all ordinary purposes, and to give as
 great pressure as can be got by the iron standing\-press, without any undue
 strain on supports or workmen.
@@ -1837,19 +1890,20 @@ book will be ready for “marking up” as soon as it comes from the press; but 
 it is to be gilt before sewing, it must be first trimmed.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs094.jpg", fit: "contain", alt: "Fig. 23.")
-  #align(center)[Fig. 23.]
+  #figure(
+    image("assets/fig23.jpg", fit: "contain", alt: "Fig. 23."),
+    // caption: [Fig. 23],
+    caption: [],
+  )<fig23>
 ]
 
 The sheets for trimming with end papers and all plates inserted must first be
-cut square at the head against a carpenter’s square (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_7")[fig. 7]).
+cut square at the head against a carpenter’s square (see @fig7[fig. 7]).
 Then a piece of mill\-board may be cut to the size, it is desired to leave the
 leaves, and the sections trimmed to it.
 To do this three nails should be put into the covering board through a piece of
 straw\-board, and the back of the section slid along nails 1 and 2 until it
-touches No. 3
-(see #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_23")[fig. 23]).
+touches No. 3 (see @fig23[fig. 23]).
 The board is slid in the same way, and anything projecting beyond it cut off.
 When the under straw\-board has become inconveniently scored in the first
 position, by shifting the lower nail (1) a fresh surface will receive the cuts.
@@ -1864,8 +1918,11 @@ As by this machine several sections can be cut at once, the time taken is not
 very much greater than if the book were cut in the plough.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs095.jpg", fit: "contain", alt: "Fig. 24.")
-  #align(center)[Fig. 24.]
+  #figure(
+    image("assets/fig24.jpg", fit: "contain", alt: "Fig. 24."),
+    // caption: [Fig. 24],
+    caption: [],
+  )<fig24>
 ]
 
 Considerable judgment is required in trimming.
@@ -1879,8 +1936,11 @@ remain should be opened with a folder, as if opened after gilding, they will
 show a ragged white edge.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs096.jpg", fit: "contain", alt: "Fig. 25.")
-  #align(center)[Fig. 25.]
+  #figure(
+    image("assets/fig25.jpg", fit: "contain", alt: "Fig. 25."),
+    // caption: [Fig. 25],
+    caption: [],
+  )<fig25>
 ]
 
 #heading(level: 5)[EDGE GILDING]
@@ -1888,8 +1948,7 @@ show a ragged white edge.
 To gild the edges of trimmed sections, the book must be “knocked up” to the
 fore\-edge, getting as many of the short leaves as possible to the front.
 It is then put into the “lying press,” with gilding boards on each side (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_25")[fig. No. 25] ),
-and screwed up tightly.
+@fig25[fig. No. 25]), and screwed up tightly.
 Very little scraping will be necessary, and usually if well rubbed with fine
 sand\-paper, to remove any chance finger\-marks or loose fragments of paper, the
 edge will be smooth enough to gild.
@@ -1907,8 +1966,7 @@ It will then be ready for an application of glaire.
 Before glairing, the gold must be cut on the cushion to the width required (see
 p. #link("8523092203054335333_26672-h-1.htm.xhtml#Page_200")[200] ), and may be
 either taken up on very slightly greased paper, a gilder’s tip, or with a piece
-of net stretched on a little frame (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_26")[fig. 26] ).
+of net stretched on a little frame (see @fig26[fig. 26]).
 The gold leaf will adhere sufficiently to the net, and can be readily released
 by a light breath when it is exactly over the proper place on the edge.
 
@@ -1920,12 +1978,14 @@ rubbed on beeswax, and is ready for burnishing.
 It is best to commence burnishing through a piece of thin slightly waxed paper
 to set the gold, and afterwards the burnisher can be used directly on the edge.
 A piece of bloodstone ground so as to have no sharp edges (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_27")[fig. 27])
-makes a good burnisher.
+@fig27[fig. 27]) makes a good burnisher.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs098.jpg", fit: "contain", alt: "Fig. 26.")
-  #align(center)[Fig. 26.]
+  #figure(
+    image("assets/fig26.jpg", fit: "contain", alt: "Fig. 26."),
+    // caption: [Fig. 26],
+    caption: [],
+  )<fig26>
 ]
 
 There are several different preparations used for gilding edges.
@@ -1933,8 +1993,11 @@ One part of beaten up white of egg with four parts of water left to stand for a
 day and strained will be found to answer well.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs098a.jpg", fit: "contain", alt: "Fig. 27.")
-  #align(center)[Fig. 27.]
+  #figure(
+    image("assets/fig27.jpg", fit: "contain", alt: "Fig. 27."),
+    // caption: [Fig. 27],
+    caption: [],
+  )<fig27>
 ]
 
 After the fore\-edge is gilt the same operation is repeated at the head and
@@ -2001,21 +2064,22 @@ prints of the early sixteenth century, and probably dates from still earlier
 times.
 It consists of a bed with two uprights and a crossbar, which can be heightened
 or lowered by the turning of wooden nuts working on a screw thread cut in the
-uprights (see #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_29")[fig. 29] ).
+uprights (see @fig29[fig. 29]).
 
 To set up for sewing, as many loops of cord, called “lay cords,” as there are to
 be bands, are threaded on to the cross piece, and to these, by a simple knot,
-shown at #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_28")[fig. 28] ,
-cords are fastened to form the bands.
+shown at @fig28[fig. 28], cords are fastened to form the bands.
 The “lay cords” can be used again and again until worn out.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs102.jpg", fit: "contain", alt: "Fig. 28.")
-  #align(center)[Fig. 28.]
+  #figure(
+    image("assets/fig28.jpg", fit: "contain", alt: "Fig. 28."),
+    // caption: [Fig. 28],
+    caption: [],
+  )<fig28>
 ]
 
-To fasten the cord below, a key is taken (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_28")[fig. 28] )
+To fasten the cord below, a key is taken (see @fig28[fig. 28])
 and held below the press by the right hand; the cord is then pulled up
 round it by the left, and held in position on the key by the first finger of the
 right hand.
@@ -2045,8 +2109,11 @@ Plates need special care to see that the guards go properly round the sheets
 next them.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs105.jpg", fit: "contain", alt: "Fig. 29.")
-  #align(center)[Fig. 29.]
+  #figure(
+    image("assets/fig29.jpg", fit: "contain", alt: "Fig. 29."),
+    // caption: [Fig. 29],
+    caption: [],
+  )<fig29>
 ]
 
 The top back corner, on front and back waste end paper, should be marked.
@@ -2062,7 +2129,7 @@ hand and turned over, so that the marks on the back come in the proper places
 against the strings.
 The left hand is inserted into the place where the sewing is to be, and with the
 right hand a needle and thread is passed through the kettle stitch mark (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_29")[fig. 29] ).
+@fig29[fig. 29]).
 It is grasped by the fingers of the left hand, is passed out through the back at
 the first mark on the left\-hand side of the first upright cord, and pulled
 tight, leaving a loose end of thread at the kettle stitch.
@@ -2074,7 +2141,7 @@ from tail to head, the thread being tied to the loose end hanging from the first
 kettle stitch.
 Another section is laid on and sewn, but when the kettle stitch is reached, the
 under thread is caught up in the way shown in
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_30")[fig. 30] .
+@fig30[fig. 30].
 These operations are repeated throughout the whole book.
 If the back seems likely to swell too much, the sections can be lightly tapped
 down with a loaded stick made for the purpose, care being taken not to drive the
@@ -2084,19 +2151,24 @@ stitch is made, and the end cut off.
 This method is known as flexible sewing “all along.”
 
 #align(center)[
-  #image("assets/8609007543340486758_gs106.jpg", fit: "contain", alt: "Fig. 30.")
-  #align(center)[Fig. 30.]
+  #figure(
+    image("assets/fig30.jpg", fit: "contain", alt: "Fig. 30."),
+    // caption: [Fig. 30],
+    caption: [],
+  )<fig30>
 ]
 
-#image("assets/8609007543340486758_gs107.jpg", fit: "contain", alt: "Fig. 31.")
-#align(center)[Fig. 31.]
+#figure(
+  image("assets/fig31.jpg", fit: "contain", alt: "Fig. 31."),
+  // caption: [Fig. 31],
+  caption: [],
+)<fig31>
 
 When one needle full of thread is exhausted, another is tied on, making
 practically a continuous length of thread going all along each section and round
 every band.
 The weaver’s knot is the best for joining the lengths of thread.
-A simple way of tying it is shown at
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_31")[fig. 31].
+A simple way of tying it is shown at @fig31[fig. 31].
 A simple slip knot is made in the end of the new thread and put over the end of
 the old, and, on being pulled tight, the old thread should slip through, as
 shewn at B.
@@ -2137,18 +2209,23 @@ section, the saw marks with the band inserted would show, and be a serious
 disfigurement.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs111.jpg", fit: "contain", alt: "Fig. 32.")
-  #align(center)[Fig. 32.]
+  #figure(
+    image("assets/fig32.jpg", fit: "contain", alt: "Fig. 32."),
+    // caption: [Fig. 32],
+    caption: [],
+  )<fig32>
 ]
 
 #align(right)[
-  #image("assets/8609007543340486758_gs112.jpg", fit: "contain", alt: "Fig. 33.")
-  #align(center)[Fig. 33.]
+  #figure(
+    image("assets/fig33.jpg", fit: "contain", alt: "Fig. 33."),
+    // caption: [Fig. 33],
+    caption: [],
+  )<fig33>
 ]
 
 Mediæval books were usually sewn on double cords or strips of leather, and the
-headband was often sewn at the same time, as shown at
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_32")[fig. 32] , A.
+headband was often sewn at the same time, as shown at @fig32[fig. 32], A.
 This is an excellent method for very large books with heavy sections, and is
 specially suitable for large vellum manuscripts, in many of which the sections
 are very thick.
@@ -2166,8 +2243,7 @@ the somewhat unfinished look of the cut\-off ends of the modern headband, is, on
 the whole, of doubtful advantage, as it is necessary to cut the “turn in” at the
 point where strength in the leather is much wanted.
 
-At #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_32")[fig. 32]
-is shown in section the three methods of sewing mentioned.
+At @fig32[fig. 32] is shown in section the three methods of sewing mentioned.
 A is the old sewing round double bands; with the headbands worked at the same
 time with the same thread; B is the modern flexible sewing, and C the common
 sawn\-in method.
@@ -2181,8 +2257,7 @@ underneath the frame.
 The sewing, in the case of such flat bands, would not go round, but only across
 them.
 To avoid undue looseness, every three or four threads may be caught up at the
-back of the band, as shown in
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_33")[fig. 33] .
+back of the band, as shown in @fig33[fig. 33].
 
 #heading(level: 5)[MATERIALS FOR SEWING]
 
@@ -2251,8 +2326,7 @@ book on each side, and the free portions frayed out.
 If proper sewing cord is used, this will be found to be very easily done, if a
 binder’s bodkin is first inserted between the two strands, separating them, and
 then again in the centre of each separated strand to still further straighten
-the fibres
-(see #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_34")[fig. 34] ).
+the fibres (see @fig34[fig. 34]).
 
 The fraying out of the thick cord recommended for heavy books is a more
 difficult operation, but with a little trouble the fibres of any good cord can
@@ -2262,8 +2336,11 @@ free on each side.
 The free parts of the bands are called slips.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs116.jpg", fit: "contain", alt: "Fig. 34.")
-  #align(center)[Fig. 34.]
+  #figure(
+    image("assets/fig34.jpg", fit: "contain", alt: "Fig. 34."),
+    // caption: [Fig. 34],
+    caption: [],
+  )<fig34>
 ]
 
 The book is now ready for glueing up.
@@ -2276,7 +2353,7 @@ slips on one side free and to pull them as tight as possible while the book is
 held in the press, or a knocking\-down iron may be placed on one side of the
 projecting back and the other side tapped with the backing hammer to make the
 sections lie close to one another, and then the slips pulled straight (
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_35")[fig. 35] ).
+@fig35[fig. 35]).
 The back must now be glued.
 The glue for this operation must be hot, and not too thick.
 It is very important that it should be worked well between the sections with the
@@ -2291,8 +2368,11 @@ glue\-brush rapidly spun round in the glue\-pot to break it up and to make it
 work freely.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs117.jpg", fit: "contain", alt: "Fig. 35.")
-  #align(center)[Fig. 35.]
+  #figure(
+    image("assets/fig35.jpg", fit: "contain", alt: "Fig. 35."),
+    // caption: [Fig. 35],
+    caption: [],
+  )<fig35>
 ]
 
 Very great care is needed to see that the head of a previously trimmed book is
@@ -2312,22 +2392,28 @@ On the other hand, a back that is quite flat has to be lined up stiffly, or it
 may become concave with use.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs119.jpg", fit: "contain", alt: "Fig. 36.")
-  #align(center)[Fig. 36.]
+  #figure(
+    image("assets/fig36.jpg", fit: "contain", alt: "Fig. 36."),
+    // caption: [Fig. 36],
+    caption: [],
+  )<fig36>
 ]
 
 The method of rounding is to place the book with the back projecting a little
 over the edge of the press or table, then to draw the back over towards the
 workman, and, while in this position, to tap it carefully with a hammer (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_36")[fig. 36] ).
+@fig36[fig. 36]).
 This is repeated on the other side of the book, and, if properly done, will give
 the back an even, convex form that should be in section, a portion of a circle.
 Rounding and backing are best done after the glue has ceased to be tacky, but
 before it has set hard.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs120.jpg", fit: "contain", alt: "Fig. 37.")
-  #align(center)[Fig. 37.]
+  #figure(
+    image("assets/fig37.jpg", fit: "contain", alt: "Fig. 37."),
+    // caption: [Fig. 37],
+    caption: [],
+  )<fig37>
 ]
 
 Backing is perhaps the most difficult and important operation in forwarding.
@@ -2339,16 +2425,18 @@ the thickness of the paper, twenty thicknesses of thread.
 If the boards were laced on to the book without rounding or backing, and the
 book were pressed, the additional thickness of the back, having to go somewhere,
 would cause it to go either convex or concave, or else perhaps to crease up (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_37")[fig. 37] ).
+@fig37[fig. 37] ).
 The object of rounding is to control the distribution of this swelling, and to
 make the back take an even and permanently convex form.
 
-#image("assets/8609007543340486758_gs121.jpg", fit: "contain", alt: "Fig. 38.")
-#align(center)[Fig. 38.]
+#figure(
+  image("assets/fig38.jpg", fit: "contain", alt: "Fig. 38."),
+  // caption: [Fig. 38],
+  caption: [],
+)<fig38>
 
 If the boards were merely laced on after rounding, there would be a gap between
-the square ends of the board and the edge of the back (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_38")[fig. 38] ),
+the square ends of the board and the edge of the back (see @fig38[fig. 38]),
 though the convexity and even curve of the back would be to some extent
 assured.
 What is done in backing is to make a groove, into which the edges of the board
@@ -2361,13 +2449,15 @@ shall return to the same form after the book has been opened.
 #pagebreak()
 
 #align(right)[
-  #image("assets/8609007543340486758_gs121a.jpg", fit: "contain", alt: "Fig. 39.")
-  #align(center)[Fig. 39.]
+  #figure(
+    image("assets/fig39.jpg", fit: "contain", alt: "Fig. 39."),
+    // caption: [Fig. 39],
+    caption: [],
+  )<fig39>
 ]
 
 To back the book, backing boards are placed on each side (leaving the slips
-outside) a short distance below the edge of the back (
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_39")[fig. 39] ).
+outside) a short distance below the edge of the back (@fig39[fig. 39]).
 The amount to leave here must be decided by the thickness of the boards to be
 used.
 When the backing boards are in position, the book and boards must be carefully
@@ -2380,35 +2470,43 @@ Unless the back has a perfectly even curve when put in the press for backing, no
 amount of subsequent hammering will put it permanently right.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs122.jpg", fit: "contain", alt: "Fig. 40.")
-  #align(center)[Fig. 40.]
+  #figure(
+    image("assets/fig40.jpg", fit: "contain", alt: "Fig. 40."),
+    // caption: [Fig. 40],
+    caption: [],
+  )<fig40>
 ]
 
 #align(center)[
-  #image("assets/8609007543340486758_gs123.jpg", fit: "contain", alt: "Fig. 41.")
-  #align(center)[Fig. 41.]
+  #figure(
+    image("assets/fig41.jpg", fit: "contain", alt: "Fig. 41."),
+    // caption: [Fig. 41],
+    caption: [],
+  )<fig41>
 ]
 
 The backs of the sections should be evenly fanned out one over the other from
 the centre outwards on both sides.
 This is done by side strokes of the hammer, in fact by a sort of “riveting”
-blow, and not by a directly crushing blow (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_41")[fig. 41],
+blow, and not by a directly crushing blow (see @fig41[fig. 41],
 in which the arrows show the direction of the hammer strokes).
 If the sections are not evenly fanned out from the centre, but are either
 zigzagged by being crushed by direct blows of the hammer, as shown in
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_42")[fig. 42], A,
+@fig42[fig. 42], A,
 or are unevenly fanned over more to one side than the other, as shown
-in #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_42")[fig. 42], B,
+in @fig42[fig. 42], B,
 the back, although it may be even enough when first done, will probably
 become uneven with use.
 A book in which the sections have been crushed down, as at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_42")[fig. 42], A,
+@fig42[fig. 42], A,
 will be disfigured inside by creases in the paper.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs124.jpg", fit: "contain", alt: "Fig. 42.")
-  #align(center)[Fig. 42.]
+  #figure(
+    image("assets/fig42.jpg", fit: "contain", alt: "Fig. 42."),
+    // caption: [Fig. 42],
+    caption: [],
+  )<fig42>
 ]
 
 #table(
@@ -2416,14 +2514,20 @@ will be disfigured inside by creases in the paper.
   columns: 2,
   [
     #align(center)[
-      #image("assets/8609007543340486758_gs124a.jpg", fit: "contain", alt: "Fig. 43.")
-      #align(center)[Fig. 43.]
+      #figure(
+        image("assets/fig43.jpg", fit: "contain", alt: "Fig. 43."),
+        // caption: [Fig. 43],
+        caption: [],
+      )<fig43>
     ]
   ],
   [
     #align(center)[
-      #image("assets/8609007543340486758_gs124b.jpg", fit: "contain", alt: "Fig. 44.")
-      #align(center)[Fig. 44.]
+      #figure(
+        image("assets/fig44.jpg", fit: "contain", alt: "Fig. 44."),
+        // caption: [Fig. 44],
+        caption: [],
+      )<fig44>
     ]
   ],
 )
@@ -2432,13 +2536,11 @@ It is a mistake to suppose that a very heavy hammer is necessary for backing
 any but the largest books.
 For flexible books a hammer with a comparatively small face should be used, as
 by its use the book can be backed without flattening the bands.
-It is well to have a hammer head of the shape shown in
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_43")[fig. 43].
+It is well to have a hammer head of the shape shown in @fig43[fig. 43].
 By using the thin end, the force of a comparatively light blow, because
 concentrated on a small surface, is effective.
 
-At #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_44")[fig. 44]
-is shown an ordinary backing hammer.
+At @fig44[fig. 44] is shown an ordinary backing hammer.
 
 //
 
@@ -2477,16 +2579,18 @@ It will not be necessary to put a double lining on the inside of such boards, as
 a thin board will always draw a thick one.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs127.jpg", fit: "contain", alt: "Fig. 45.")
-  #align(center)[Fig. 45.]
+  #figure(
+    image("assets/fig45.jpg", fit: "contain", alt: "Fig. 45."),
+    // caption: [Fig. 45],
+    caption: [],
+  )<fig45>
 ]
 
 If mill\-boards are used they are first cut roughly to size with the mill\-board
 shears, screwed up in the “lying” press.
 The straight arm of the shears is the one to fix in the press, for if the bent
 arm be undermost, the knuckles are apt to be severely bruised against the end.
-A better way of fixing the shears is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_45")[fig. 45] .
+A better way of fixing the shears is shown at @fig45[fig. 45].
 Any blacksmith will bend the arm of the shears and make the necessary clips.
 This method saves trouble and considerable wear and tear to the “lying” press.
 Where a great many boards are needed, they may be quickly cut in a board
@@ -2512,28 +2616,32 @@ may be used between the cheek of the press and the board to be cut, making a
 true edge for the knife to run on.
 
 #align(center)[
-  #image(
-    "assets/8609007543340486758_gs129.jpg",
-    fit: "contain",
-    alt: "Fig. 46. — Lying or Cutting Press",
-  )
-  #align(center)[Fig. 46. — Lying or Cutting Press]
+  #figure(
+    image(
+      "assets/fig46.jpg",
+      fit: "contain",
+      alt: "Fig. 46. — Lying or Cutting Press",
+    ),
+    // caption: [Fig. 46. — Lying or Cutting Press],
+    caption: [Lying or Cutting Press],
+  )<fig46>
 ]
 
-The position of the plough on the press is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_46")[fig. 46] .
+The position of the plough on the press is shown at @fig46[fig. 46].
 The side of the press with runners should be reserved for cutting, the other
 side used for all other work.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs130.jpg", fit: "contain", alt: "Fig. 47.")
-  #align(center)[Fig. 47.]
+  #figure(
+    image("assets/fig47.jpg", fit: "contain", alt: "Fig. 47."),
+    // caption: [Fig. 47],
+    caption: [],
+  )<fig47>
 ]
 
 The plough knife for mill\-boards should not be ground at too acute an angle, or
 the edge will most likely break away at the first cut.
-The shape shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_47")[fig. 47] is suitable.
+The shape shown at @fig47[fig. 47] is suitable.
 The knife should be very frequently ground, as it soon gets blunt, which adds
 greatly to the labour of cutting.
 
@@ -2565,7 +2673,7 @@ The pair of boards is then knocked up to the back and lowered into the press as
 before, so that the plough knife will exactly cut through the points.
 The same operation is repeated on the two remaining uncut edges.
 In marking out those for the fore\-edge, the measurement is taken with a pair of
-compasses ( #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_48")[fig. 48] )
+compasses (@fig48[fig. 48])
 from the joint of the book to the fore\-edge of the first section.
 If the book has been trimmed, or is to remain uncut, a little more must be
 allowed for the “squares,” and if it is to be cut in the plough, it must be now
@@ -2575,12 +2683,20 @@ than to have them too small, and either be obliged to get out a new pair of
 boards, or unduly cut down the book.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs132.jpg", fit: "contain", alt: "Fig. 48.")
-  #align(center)[Fig. 48.]
+  #figure(
+    image("assets/fig48.jpg", fit: "contain", alt: "Fig. 48."),
+    // caption: [Fig. 48],
+    caption: [],
+  )<fig48>
 ]
 
-#image("assets/8609007543340486758_gs133.jpg", fit: "contain", alt: "Fig. 49.")
-#align(center)[Fig. 49.]
+#align(center)[
+  #figure(
+    image("assets/fig49.jpg", fit: "contain", alt: "Fig. 49."),
+    // caption: [Fig. 49],
+    caption: [],
+  )<fig49>
+]
 
 The height of the boards for a book that has been trimmed, or is to remain
 uncut, will be the height of the page with a small allowance at each end for the
@@ -2594,7 +2710,7 @@ and the book consequently suffers in proportion.
 If the boards have been found to be truly cut, they are laid on the book, and
 the position of the slips marked on them by lines at right angles to the back.
 A line is then made parallel to the back, about half an inch in (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_49")[fig. 49] ).
+@fig49[fig. 49]).
 At the points where the lines cross, a series of holes is punched from the front
 with a binder’s bodkin on a lead plate, then the board is turned over, and a
 second series is punched from the back about half an inch from the first.
@@ -2622,14 +2738,14 @@ long straight silky fibres.
 These must be well pasted, and the ends very slightly twisted.
 The pointed ends are then threaded through the first series of holes in the
 front of the board, and back again through the second (
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_50")[fig. 50] ).
+@fig50[fig. 50]).
 In lacing\-in the slips must not be pulled so tight as to prevent the board from
 shutting freely, nor left so loose as to make a perceptible interval in the
 joint of the book.
 The pasted slips having been laced in, their ends are cut off with a sharp
 knife, flush with the surface of the board.
 The laced\-in slips are then well hammered on a knocking\-down iron (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_51")[fig. 51] ),
+@fig51[fig. 51]),
 first from the front and then from the back, care being taken that the
 hammer face should fall squarely, or the slips may be cut.
 This should rivet them into the board, leaving little or no projection.
@@ -2639,18 +2755,24 @@ the points are twisted just sufficiently to facilitate the threading through the
 holes, and not enough to twist the whole slip.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs135.jpg", fit: "contain", alt: "Fig. 50.")
-  #align(center)[Fig. 50.]
+  #figure(
+    image("assets/fig50.jpg", fit: "contain", alt: "Fig. 50."),
+    // caption: [Fig. 50],
+    caption: [],
+  )<fig50>
 ]
 
 #align(center)[
-  #image("assets/8609007543340486758_gs136.jpg", fit: "contain", alt: "Fig. 51.")
-  #align(center)[Fig. 51.]
+  #figure(
+    image("assets/fig51.jpg", fit: "contain", alt: "Fig. 51."),
+    // caption: [Fig. 51],
+    caption: [],
+  )<fig51>
 ]
 
 To lace slips into wooden boards, holes are made with a brace and fine twist
 bit, and the ends of the frayed out slips may be secured with a wooden plug (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_52")[fig. 52] ).
+@fig52[fig. 52]).
 
 Old books were sometimes sewn on bands of leather, but as those sewn on cord
 seem to have lasted on the whole much better, and as, moreover, modern cord is a
@@ -2658,15 +2780,21 @@ far more trustworthy material than modern leather, it is better to use cord for
 any books bound now.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs137.jpg", fit: "contain", alt: "Fig. 52.")
-  #align(center)[Fig. 52.]
+  #figure(
+    image("assets/fig52.jpg", fit: "contain", alt: "Fig. 52."),
+    // caption: [Fig. 52],
+    caption: [],
+  )<fig52>
 ]
 
 #heading(level: 5)[CLEANING OFF THE BACK AND PRESSING]
 
 #align(right)[
-  #image("assets/8609007543340486758_gs138.jpg", fit: "contain", alt: "Fig. 53.")
-  #align(center)[Fig. 53.]
+  #figure(
+    image("assets/fig53.jpg", fit: "contain", alt: "Fig. 53."),
+    // caption: [Fig. 53],
+    caption: [],
+  )<fig53>
 ]
 
 When the boards have been laced on and the slips hammered down, the book should
@@ -2677,8 +2805,7 @@ little over it, on the outside.
 While in the press, the back should be covered with paste and left to soak for a
 few minutes.
 When the glue is soft the surplus on the surface can be scraped off with a piece
-of wood shaped as shown in
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_53")[fig. 53] .
+of wood shaped as shown in @fig53[fig. 53].
 For important books it is best to do this in the lying press, but some binders
 prefer first to build up the books in the standing press, and then to paste the
 backs and clean them off there.
@@ -2753,12 +2880,20 @@ The tail of the book is cut in the same way, still keeping the back of the book
 towards the workman, but cutting from the back board.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs142.jpg", fit: "contain", alt: "Fig. 54.")
-  #align(center)[Fig. 54.]
+  #figure(
+    image("assets/fig54.jpg", fit: "contain", alt: "Fig. 54."),
+    // caption: [Fig. 54],
+    caption: [],
+  )<fig54>
 ]
 
-#image("assets/8609007543340486758_gs143.jpg", fit: "contain", alt: "Fig. 55.")
-#align(center)[Fig. 55.]
+#align(center)[
+  #figure(
+    image("assets/fig55.jpg", fit: "contain", alt: "Fig. 55."),
+    // caption: [Fig. 55],
+    caption: [],
+  )<fig55>
+]
 
 Cutting the fore\-edge is more difficult.
 The waste sheets at each end of the book should be cut off flush with the edge
@@ -2766,11 +2901,10 @@ of the board, and marks made on them below the edge showing the amount of the
 square, and consequently how much is to be cut off.
 The curve of the back, and consequent curve of the fore\-edge, must first be got
 rid of, by inserting a pair of pieces of flat steel called “trindles” (
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_54")[fig. 54] )
+@fig54[fig. 54])
 across the back, from the inside of the boards.
 When these are inserted the back must be knocked quite flat, and, in the case of
-a heavy book, a piece of tape may be tied round the leaves (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_55")[fig. 55] )
+a heavy book, a piece of tape may be tied round the leaves (see @fig55[fig. 55])
 to keep them in position.
 A pair of cutting boards is placed one on each side of the leaves, the back one
 exactly up to the point that the edge of the board came to, and the front one as
@@ -2780,7 +2914,7 @@ boards by the finger and thumb; book and boards are then lowered very carefully
 into the press.
 The top edge of the front cutting board should be flush with the right\-hand
 cheek of the press, and that of the back a square above the left\-hand cheek
-(see #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_56")[fig. 56] ).
+(see @fig56[fig. 56]).
 A further test is to look along the surface of the right\-hand cheek, when, if
 the book has been inserted truly, the amount of the back cutting board in sight
 should exactly correspond with the amount of the paper to be cut showing above
@@ -2793,8 +2927,11 @@ it is usually a waste of time to try to adjust the book when it is in the press.
 The leaves are cut in the same way as those of the head and tail.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs144.jpg", fit: "contain", alt: "Fig. 56.")
-  #align(center)[Fig. 56.]
+  #figure(
+    image("assets/fig56.jpg", fit: "contain", alt: "Fig. 56."),
+    // caption: [Fig. 56],
+    caption: [],
+  )<fig56>
 ]
 
 #heading(level: 5)[GILDING OR COLOURING THE EDGES OF A CUT BOOK]
@@ -2816,7 +2953,7 @@ desired to gild in the round, a process which gives the objectionable solid
 metallic edge.
 
 After the edges have been gilt they may be decorated by tooling, called
-“gauffering.\ ”
+“gauffering.”
 
 This may be done, either by tooling with hot tools directly on the gold while
 the leaves are screwed up tightly in the press, or by laying another coloured
@@ -2843,11 +2980,15 @@ For colouring edges almost any stain will answer, or ordinary water\-colours may
 be used if moistened with size.
 
 When the colour is dry the edge should be lightly rubbed over with a little
-beeswax, and burnished with a tooth burnisher (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_57")[fig. 57] ).
+beeswax, and burnished with a tooth burnisher (see @fig57[fig. 57]).
 
-#image("assets/8609007543340486758_gs147.jpg", fit: "contain", alt: "Fig. 57.")
-#align(center)[Fig. 57.]
+#align(center)[
+  #figure(
+    image("assets/fig57.jpg", fit: "contain", alt: "Fig. 57."),
+    // caption: [Fig. 57],
+    caption: [],
+  )<fig57>
+]
 
 In addition to plain colour and gilding, the edges of a book may be decorated in
 a variety of ways.
@@ -2938,8 +3079,7 @@ together with thumb and finger at the opposite ends of the band, so as to
 compress the sections into their final compass.
 If the band then buckles in the least, it is too long and must be shortened.
 
-The mediæval headbands were sewn with the other bands (see
-#link("8523092203054335333_26672-h-0.htm.xhtml#Fig_32")[fig. 32] ),
+The mediæval headbands were sewn with the other bands (see @fig32[fig. 32]),
 and were very strong, as they were tied down at every section.
 Modern worked headbands, although not so strong, are, if frequently tied down,
 strong enough to resist any reasonable strain.
@@ -2991,8 +3131,11 @@ This can be put on by pasting the linen or leather and giving the back a very
 thin coat of glue.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs154.jpg", fit: "contain", alt: "Fig. 58.")
-  #align(center)[Fig. 58.]
+  #figure(
+    image("assets/fig58.jpg", fit: "contain", alt: "Fig. 58."),
+    // caption: [Fig. 58],
+    caption: [],
+  )<fig58>
 ]
 
 The only thing now left to do before covering will be to set the squares and to
@@ -3002,7 +3145,7 @@ out of place.
 The form of the little piece to be cut off varies with each individual binder,
 but I have found for an octavo book that a cut slightly sloping from the inside
 cutting off the corner about an eighth of an inch each way, gives the best
-result (see #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_58")[fig. 58] ).
+result (see @fig58[fig. 58]).
 When the corner has been cut off, the boards should be thrown back, and the
 slips between the book and the board well pasted.
 When these have soaked a little, the squares of the boards are set; that is, the
@@ -3076,15 +3219,16 @@ projects beyond the boards, the whole weight of the book rests on it, and it is
 certain to be rubbed off when the book is put on the shelf.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs158.jpg", fit: "contain", alt: "Fig. 59.")
-  #align(center)[Fig. 59.]
+  #figure(
+    image("assets/fig59.jpg", fit: "contain", alt: "Fig. 59."),
+    // caption: [Fig. 59],
+    caption: [],
+  )<fig59>
 ]
 
-The method of paring with a French knife (
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_60")[fig. 60] , A) —
+The method of paring with a French knife (@fig60[fig. 60], A) —
 the only form of knife in use by binders that gives sufficient control
-over the leather — is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_59")[fig. 59] .
+over the leather — is shown at @fig59[fig. 59].
 To use this knife properly, practice is required.
 The main thing to learn is that the knife must be used quite flat, and made to
 cut by having a very slight burr on the under side.
@@ -3094,11 +3238,14 @@ The handle of the knife should never be raised to such a height above the
 surface of the stone that it is possible to get the under fingers of the right
 hand over the edge of the stone.
 Another form of knife suitable for paring the edges of leather is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_60")[fig. 60] , B.
+@fig60[fig. 60], B.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs159.jpg", fit: "contain", alt: "Fig. 60.")
-  #align(center)[Fig. 60.]
+  #figure(
+    image("assets/fig60.jpg", fit: "contain", alt: "Fig. 60."),
+    // caption: [Fig. 60],
+    caption: [],
+  )<fig60>
 ]
 
 To test if the leather has been sufficiently pared, fold it over where the edge
@@ -3133,8 +3280,7 @@ When the cover is pasted, it can be folded with the pasted sides together and
 left to soak for a few minutes while the back is again looked to, and any
 roughness smoothed down with the folder.
 Before covering, the bands should be nipped up with band nippers
-(see  #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_61")[fig. 61] ) to
-make sure that they are sharp.
+(see  @fig61[fig. 61]) to make sure that they are sharp.
 The coverer should have ready before covering a clean paring stone, one or two
 folders, a pair of nickeled\-band nippers, a clean sponge, a little water in a
 saucer, a piece of thread, and a strip of smooth wood (boxwood for preference),
@@ -3148,8 +3294,11 @@ The waterproof sheets recommended are thin sheets of celluloid, such as are
 used by photographers.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs161.jpg", fit: "contain", alt: "Fig. 61.")
-  #align(center)[Fig. 61.]
+  #figure(
+    image("assets/fig61.jpg", fit: "contain", alt: "Fig. 61"),
+    // caption: [Fig. 61],
+    caption: [],
+  )<fig61>
 ]
 
 When these things are ready, the pasted cover should be examined and repasted if
@@ -3161,8 +3310,11 @@ If there is too much, it will rub up and make very ugly, uneven places under the
 leather; and if there is too little, the cover will not stick.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs163.jpg", fit: "contain", alt: "Fig. 62.")
-  #align(center)[Fig. 62.]
+  #figure(
+    image("assets/fig62.jpg", fit: "contain", alt: "Fig. 62"),
+    // caption: [Fig. 62],
+    caption: [],
+  )<fig62>
 ]
 
 Take the pasted cover and look to see which is the better side of the leather.
@@ -3171,10 +3323,8 @@ beginning of the turn\-in.
 Then draw the leather over the back and on to the other side, pulling it
 slightly, but not dragging it.
 Then stand the book on its fore\-edge on a piece of waste paper, with the
-leather turned out on either side, as shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_62")[fig. 62] ,
-and nip up the bands with nickeled band nippers (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_63")[fig. 63] ).
+leather turned out on either side, as shown at @fig62[fig. 62],
+and nip up the bands with nickeled band nippers (see @fig63[fig. 63]).
 After this is done there will probably be a good deal of loose leather on the
 back.
 This can be got rid of by dragging the leather on to the side; but by far the
@@ -3197,49 +3347,60 @@ The turned\-in edge must lie quite evenly, or it will result in a ridge on the
 back.
 The leather is turned in on the two boards in the same way as described for the
 fore\-edge, and the edge rubbed square with a folder.
-At #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_64")[fig. 64]
-is shown a convenient form of folder for covering.
+At @fig64[fig. 64] is shown a convenient form of folder for covering.
 At the corners the leather must be pulled over as far as possible with two
 folders meeting at the extreme point, the object being to avoid a cut in the
 leather at the corner of the board.
-The folds so formed must be cut off with the scissors (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_65")[fig. 65] , A),
+The folds so formed must be cut off with the scissors (see @fig65[fig. 65], A),
 then one edge tucked neatly under the other, (B).
 Care must be taken throughout not to soil the edges of the leaves.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs164.jpg", fit: "contain", alt: "Fig. 63.")
-  #align(center)[Fig. 63.]
+  #figure(
+    image("assets/fig63.jpg", fit: "contain", alt: "Fig. 63"),
+    // caption: [Fig. 63],
+    caption: [],
+  )<fig63>
 ]
 
 #align(center)[
-  #image("assets/8609007543340486758_gs165.jpg", fit: "contain", alt: "Fig. 64.")
-  #align(center)[Fig. 64.]
+  #figure(
+    image("assets/fig64.jpg", fit: "contain", alt: "Fig. 64."),
+    // caption: [Fig. 64],
+    caption: [],
+  )<fig64>
 ]
 
 At the headband the fold of leather, pared thin for the purpose, must be
 squeezed together with a folder and pulled out a little to leave an even
 projection that can be turned over to form a head\-cap.
 When both ends have been turned in, in this way, the boards must each be opened
-and pressed against a straight\-edge held in the joint (
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_66")[fig. 66] )
+and pressed against a straight\-edge held in the joint (@fig66[fig. 66])
 to ensure that there is enough leather in the turn\-in of the joint to
 allow the cover to open freely; and the leather of the turn\-in at the head and
 tail must be carefully smoothed down with a folder.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs166.jpg", fit: "contain", alt: "Fig. 65.")
-  #align(center)[Fig. 65.]
+  #figure(
+    image("assets/fig65.jpg", fit: "contain", alt: "Fig. 65."),
+    // caption: [Fig. 65],
+    caption: [],
+  )<fig65>
 ]
 
 #align(center)[
-  #image("assets/8609007543340486758_gs166a.jpg", fit: "contain", alt: "Fig. 66.")
-  #align(center)[Fig. 66.]
+  #figure(
+    image("assets/fig66.jpg", fit: "contain", alt: "Fig. 66."),
+    // caption: [Fig. 66],
+    caption: [],
+  )<fig66>
 ]
 
-#image("assets/8609007543340486758_gs167.jpg", fit: "contain", alt: "Fig. 67.")
-#align(center)[Fig. 67.]
-
+#figure(
+  image("assets/fig67.jpg", fit: "contain", alt: "Fig. 67."),
+  // caption: [Fig. 67],
+  caption: [],
+)<fig67>
 
 The book may now be shut up if a waterproof sheet is put at each end to prevent
 the damp of the cover from cockling the paper.
@@ -3251,28 +3412,27 @@ leather in the gap caused by the corners of the board having been cut off.
 The book is then turned up on end, resting the tail on a folder or anything that
 will keep the projecting leather for the head\-cap from being prematurely
 flattened.
-The head\-caps
-( #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_67")[fig. 67] )
-must now be set.
+The head\-caps (@fig67[fig. 67]) must now be set.
 To do this the first finger of the left hand is placed behind it, and a sharp
 folder is pressed into the corners of the head\-cap between the headband and the
 thread.
 The leather is then tapped over the headband, and the whole turned over on the
 stone and rubbed at the back with a folder.
 This operation requires great nicety.
-The shape of head\-cap is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_67")[fig. 67] .
+The shape of head\-cap is shown at @fig67[fig. 67].
 The nice adjustment of head\-caps and corners, although of no constructional
 value, are the points by which the forwarding of a book is generally valued.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs168.jpg", fit: "contain", alt: "Fig. 68.")
-  #align(center)[Fig. 68.]
+  #figure(
+    image("assets/fig68.jpg", fit: "contain", alt: "Fig. 68"),
+    // caption: [Fig. 68],
+    caption: [],
+  )<fig68>
 ]
 
 If the book is a large one, it will be best to tie it up.
-The method of tying up is shown in
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_68")[fig. 68] .
+The method of tying up is shown in @fig68[fig. 68].
 The tying up cords will make marks at the side of the bands, that are not
 unpleasant on a large book.
 If they are objected to, it is best to tie the book up for about half\-an\-hour,
@@ -3292,18 +3452,22 @@ If, as is sometimes the case, the turn\-in of the leather over the joint seems
 to be inclined to bind, the cover should be merely opened half\-way, and the
 leather of the turns\-in of the joint damped with a sponge, and left to soak
 for a short time, and then the cover can usually be opened without any dragging.
-A section of a good joint is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_69")[fig. 69] , A,
-and a bad one at B.
+A section of a good joint is shown at @fig69[fig. 69], A, and a bad one at B.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs170.jpg", fit: "contain", alt: "Fig. 69.")
-  #align(center)[Fig. 69.]
+  #figure(
+    image("assets/fig69.jpg", fit: "contain", alt: "Fig. 69"),
+    // caption: [Fig. 69],
+    caption: [],
+  )<fig69>
 ]
 
 #align(center)[
-  #image("assets/8609007543340486758_gs171.jpg", fit: "contain", alt: "Fig. 70.")
-  #align(center)[Fig. 70.]
+  #figure(
+    image("assets/fig70.jpg", fit: "contain", alt: "Fig. 70."),
+    // caption: [Fig. 70],
+    caption: [],
+  )<fig70>
 ]
 
 The next operation will be to fill in the board and mitre the corners.
@@ -3321,7 +3485,7 @@ The corners must next be mitred.
 To do this, both thicknesses of leather are cut through from the corner of the
 board to the corner of the inside margin.
 The knife should be held slightly slanting to make a cut, as shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_70")[fig. 70] .
+@fig70[fig. 70].
 The corners should then be thoroughly damped, and the overlapping leather from
 both sides removed, leaving what should be a neat and straight join.
 If the leather at the extreme corner should prove to be, as is often the case,
@@ -3355,14 +3519,17 @@ down, and there it is well to leave a certain amount of overlap in the joint,
 for which purpose the edge of the turn\-in leather and the edge of the leather
 joint should be pared thin.
 After pasting down the leather joints the boards should be left open till they
-are dry (see #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_71")[fig. 71] ).
+are dry (see @fig71[fig. 71]).
 The turn\-in and leather joint are then trimmed out, leaving an even margin of
 leather all round the inside of the board, and the panel in the centre filled in
 with a piece of thick paper.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs173.jpg", fit: "contain", alt: "Fig. 71.")
-  #align(center)[Fig. 71.]
+  #figure(
+    image("assets/fig71.jpg", fit: "contain", alt: "Fig. 71."),
+    // caption: [Fig. 71],
+    caption: [],
+  )<fig71>
 ]
 
 When corners and filling in are dry, the boards may be shut up, and the book is
@@ -3434,8 +3601,7 @@ The edges may be cut with a guillotine.
 The ends of the tapes are glued on the waste end paper, which should be cut off
 about an inch and a half from the back.
 The split boards are then opened and glued, and the waste end papers with slips
-attached are placed in them (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_72")[fig. 72] ),
+attached are placed in them (see @fig72[fig. 72]),
 and the book nipped in the press.
 To form a “French joint” the boards should be kept about an eighth of an inch
 from the back of the book.
@@ -3453,8 +3619,11 @@ The sides may be covered with good paper, which will wear quite as well as
 cloth, look better, and cost less.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs177.jpg", fit: "contain", alt: "Fig. 72.")
-  #align(center)[Fig. 72.]
+  #figure(
+    image("assets/fig72.jpg", fit: "contain", alt: "Fig. 72."),
+    // caption: [Fig. 72],
+    caption: [],
+  )<fig72>
 ]
 
 The lettering of library books is very important (see
@@ -3485,8 +3654,7 @@ Scrap\-books, into which autograph letters, sketches, or other papers can be
 pasted, may be made as follows:—Enough paper of good quality is folded up to the
 size desired, and pieces of the same paper, of the same height, and about two
 inches wide, are folded down the centre and inserted between the backs of the
-larger sheets, as shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_73")[fig. 73] .
+larger sheets, as shown at @fig73[fig. 73].
 It is best not to insert these smaller pieces in the centre of the section, as
 they would be troublesome in sewing.
 If, after sewing, the book is filled up with waste paper laid between the
@@ -3497,23 +3665,29 @@ paper is used, any letters or papers that have become soiled, will look unduly
 dirty.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs180.jpg", fit: "contain", alt: "Fig. 73.")
-  #align(center)[Fig. 73.]
+  #figure(
+    image("assets/fig73.jpg", fit: "contain", alt: "Fig. 73."),
+    // caption: [Fig. 73],
+    caption: [],
+  )<fig73>
 ]
 
 Autograph letters may be mounted in the following ways:—If the letter is written
 upon both sides of a single leaf, it may be either “inlaid,” or guarded, as
-shown at #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_74")[fig. 74] , A.
+shown at @fig74[fig. 74], A.
 A letter on a folded sheet of notepaper should have the folds strengthened with
 a guard of strong thin paper, and be attached by a guard made, as shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_74")[fig. 74] , B;
+@fig74[fig. 74], B;
 or if on very heavy paper, by a double guard, as shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_74")[fig. 74] , C.
+@fig74[fig. 74], C.
 Torn edges of letters may be strengthened with thin Japanese paper.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs180a.jpg", fit: "contain", alt: "Fig. 74.")
-  #align(center)[Fig. 74.]
+  #figure(
+    image("assets/fig74.jpg", fit: "contain", alt: "Fig. 74."),
+    // caption: [Fig. 74],
+    caption: [],
+  )<fig74>
 ]
 
 Thin paper, written or printed only on one side, may be mounted on a page of the
@@ -3557,8 +3731,7 @@ cover.
 
 A piece of vellum should be cut out large enough to cover the book, and to leave
 a margin of an inch and a half all round.
-This is marked with a folder on the under side, as shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_75")[fig. 75] , A.
+This is marked with a folder on the under side, as shown at @fig75[fig. 75], A.
 Spaces 1 and 2 are the size of the sides of the book with surrounding squares;
 space 3 is the width of the back, and space 4 the width for the overlaps on the
 fore\-edge.
@@ -3567,26 +3740,30 @@ The overlap 4 is then turned over, and the back folded, as at C.
 The slips are now laced through slits made in the vellum.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs183.jpg", fit: "contain", alt: "Fig. 75.")
-  #align(center)[Fig. 75.]
+  #figure(
+    image("assets/fig75.jpg", fit: "contain", alt: "Fig. 75."),
+    // caption: [Fig. 75],
+    caption: [],
+  )<fig75>
 ]
 
 A piece of loose, toned paper may be put inside the cover to prevent any marks
 on the book from showing through; and pieces of silk ribbon of good quality are
 laced in as shown, going through both cover and vellum ends, if there are any,
-and are left with ends long enough to tie (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_76")[fig. 76] ).
+and are left with ends long enough to tie (see @fig76[fig. 76]).
 
 #align(center)[
-  #image("assets/8609007543340486758_gs184.jpg", fit: "contain", alt: "Fig. 76.")
-  #align(center)[Fig. 76.]
+  #figure(
+    image("assets/fig76.jpg", fit: "contain", alt: "Fig. 76."),
+    // caption: [Fig. 76],
+    caption: [],
+  )<fig76>
 ]
 
 If paper ends are used, the silk tape need only be laced through the cover, and
 the end paper pasted over it on the inside.
 
-Another simple way of keeping a vellum book shut is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_77")[fig. 77] .
+Another simple way of keeping a vellum book shut is shown at @fig77[fig. 77].
 A bead is attached to a piece of gut laced into the vellum, and a loop of catgut
 is laced in the other side, and looped over the bead as shown.
 
@@ -3598,16 +3775,19 @@ Vellum is very stiff, and, if it is pasted directly to the back, the book would
 be hard to open.
 It is best in this case to use what is known as a hollow back.
 
-#image("assets/8609007543340486758_gs185.jpg", fit: "contain", alt: "Fig. 77.")
-#align(center)[Fig. 77.]
-
+#align(center)[
+  #figure(
+    image("assets/fig77.jpg", fit: "contain", alt: "Fig. 77."),
+    // caption: [Fig. 77],
+    caption: [],
+  )<fig77>
+]
 
 To make a hollow back, a piece of stout paper is taken which measures once the
 length of the back and three times the width.
 This is folded in three.
 The centre portion is glued to the back and well rubbed down, and the
-overlapping edges turned back and glued one to the other (
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_78")[fig. 78] ).
+overlapping edges turned back and glued one to the other (@fig78[fig. 78]).
 This will leave a flat, hollow casing, formed by the single paper glued to the
 back of the book and the double paper to which the vellum may be attached.
 Or it is better to line up the back with leather, and to place a piece of thick
@@ -3615,8 +3795,11 @@ paper the size of the back on to the pasted vellum where the back will be when
 the book is covered.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs186.jpg", fit: "contain", alt: "Fig. 78.")
-  #align(center)[Fig. 78.]
+  #figure(
+    image("assets/fig78.jpg", fit: "contain", alt: "Fig. 78."),
+    // caption: [Fig. 78],
+    caption: [],
+  )<fig78>
 ]
 
 When the book is ready for covering, the vellum should be cut out and lined with
@@ -3647,8 +3830,7 @@ material for most bindings.
 #heading(level: 5)[BOOKS COVERED WITH EMBROIDERY AND WOVEN MATERIAL]
 
 To cover a book with embroidered material bind it with split boards, a French
-joint, and a hollow back, as described for vellum (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_78")[fig. 78] ).
+joint, and a hollow back, as described for vellum (see @fig78[fig. 78]).
 Glue the back of the book with thin glue well worked up, and turning in the head
 and tail of the embroidery, put the book down on it so that the back will come
 exactly in the right place.
@@ -3688,12 +3870,14 @@ steam of a kettle and the glue wiped off, and the cover again steamed.
 decorating book covers is by “tooling.”
 Tooling is the impression of heated (finishing) tools.
 Finishing tools are stamps of metal that have a device cut on the face, and are
-held in wooden handles (
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_79")[fig. 79] ).
+held in wooden handles (@fig79[fig. 79]).
 
 #align(center)[
-  #image("assets/8609007543340486758_gs189.jpg", fit: "contain", alt: "Fig. 79.")
-  #align(center)[Fig. 79.]
+  #figure(
+    image("assets/fig79.jpg", fit: "contain", alt: "Fig. 79."),
+    // caption: [Fig. 79],
+    caption: [],
+  )<fig79>
 ]
 
 Tooling may either be blind tooling, that is, a simple impression of the hot
@@ -3708,29 +3892,28 @@ In tools for gold tooling, the surface of the tool gives the pattern.
 Tools may be either complex or simple in design, that is to say, each tool may
 form a complete design with enclosing border, as the lower ones on page
 #link("8523092203054335333_26672-h-2.htm.xhtml#Page_323")[323] , or it may be
-only one element of a design, as at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_100")[fig. 100] .
-Lines may be run with a fillet (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_88")[fig. 88] ),
+only one element of a design, as at @fig100[fig. 100].
+Lines may be run with a fillet (see @fig88[fig. 88]),
 or made with gouges or pallets.
 
 Gouges are curved line tools.
-They are made in sets of arcs of concentric circles (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_80")[fig. 80] , A).
+They are made in sets of arcs of concentric circles (see @fig80[fig. 80], A).
 The portion of the curves cut off by the dotted line C will make a second set
 with flatter curves.
 Gouges are used for tooling curved lines.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs190.jpg", fit: "contain", alt: "Fig. 80.")
-  #align(center)[Fig. 80.]
+  #figure(
+    image("assets/fig80.jpg", fit: "contain", alt: "Fig. 80."),
+    // caption: [Fig. 80],
+    caption: [],
+  )<fig80>
 ]
 
 A “pallet” may be described as a segment of a roll or fillet set in a handle,
 and used chiefly for putting lines or other ornaments across the backs of books
-(see #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_81")[fig. 81] ).
-A set of one\-line pallets is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_80")[fig. 80] , B.
+(see @fig81[fig. 81]).
+A set of one\-line pallets is shown at @fig80[fig. 80], B.
 
 Fillets are cut with two or more lines on the edge.
 Although the use of double\-line fillets saves time, I have found that a few
@@ -3742,9 +3925,13 @@ In addition to the rigid stamps, an endless pattern for either blind or gold
 tooling may be engraved on the circumference of a roll, and impressed on the
 leather by wheeling.
 
-#image("assets/8609007543340486758_gs191.jpg", fit: "contain", alt: "Fig. 81.")
-#align(center)[Fig. 81.]
-
+#align(center)[
+  #figure(
+    image("assets/fig81.jpg", fit: "contain", alt: "Fig. 81."),
+    // caption: [Fig. 81],
+    caption: [],
+  )<fig81>
+]
 
 The use of a roll in finishing dates from the end of the fifteenth century, and
 some satisfactory bindings were decorated with its aid.
@@ -3768,8 +3955,7 @@ called blocks.
 The first thing the finisher does to a book is to go over the back with a
 polisher and smooth out any irregularities.
 
-Two forms of polisher are shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_82")[fig. 82] .
+Two forms of polisher are shown at @fig82[fig. 82].
 The lower one is suitable for polishing backs and inside margins, and the upper
 for sides.
 Polishers must be used warm, but not too hot, or the leather may be scorched,
@@ -3786,15 +3972,18 @@ books that are to have only a small amount of finishing, the grain is best left
 unflattened.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs193.jpg", fit: "contain", alt: "Fig. 82.")
-  #align(center)[Fig. 82.]
+  #figure(
+    image("assets/fig82.jpg", fit: "contain", alt: "Fig. 82."),
+    // caption: [Fig. 82],
+    caption: [],
+  )<fig82>
 ]
 
 If the grain of the leather is to be “crushed,” it may be done at this stage.
 To do this, one board at a time is damped with a sponge and put in the
 standing\-press, with a pressing plate on the grained side, and a pad of
 blotting\-paper, or some such yielding substance, on the other (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_83")[fig. 83] ).
+@fig83[fig. 83]).
 The press is then screwed up tight, and the board left for a short time.
 For some leathers this operation is best done after the binding has been
 finished and varnished, in which case, of course, the boards cannot be damped
@@ -3805,18 +3994,20 @@ covered, or the leather on the back may crinkle up and become detached.
 The next thing will be to decide what lettering and what decoration, if any, is
 to be put on the volume.
 The lettering should be made out first (see page
-#link("8523092203054335333_26672-h-1.htm.xhtml#Page_215")[215] ).
+#link("8523092203054335333_26672-h-1.htm.xhtml#Page_215")[215]).
 If the book is to be at all elaborately decorated, paper patterns must be made
 out, as described in Chapter XVI.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs194.jpg", fit: "contain", alt: "Fig. 83.")
-  #align(center)[Fig. 83.]
+  #figure(
+    image("assets/fig83.jpg", fit: "contain", alt: "Fig. 83."),
+    // caption: [Fig. 83],
+    caption: [],
+  )<fig83>
 ]
 
 For tooling the back, the book is held in the finishing press between a pair of
-backing boards lined with leather (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_84")[fig. 84] ),
+backing boards lined with leather (see @fig84[fig. 84]),
 and the paper pattern put across the back, with the ends either slightly
 pasted to the backing boards, or caught between them and the book.
 
@@ -3827,12 +4018,14 @@ and flat on the cheek of the press, unless the book is a large one, when it is
 easier to tool the sides out of the press.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs195.jpg", fit: "contain", alt: "Fig. 84.")
-  #align(center)[Fig. 84.]
+  #figure(
+    image("assets/fig84.jpg", fit: "contain", alt: "Fig. 84."),
+    // caption: [Fig. 84],
+    caption: [],
+  )<fig84>
 ]
 
-The selected tools, which should be ready on the stove (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_85")[fig. 85] ),
+The selected tools, which should be ready on the stove (see @fig85[fig. 85]),
 are one at a time cooled on a wet pad, and then pressed in their former
 impressions upon the paper.
 The degree of heat required varies a good deal with the leather used, and will
@@ -3846,12 +4039,15 @@ as, if the end only is cooled, the heat is apt to run down again, and the tool
 will still be too hot.
 
 #align(center)[
-  #image(
-    "assets/8609007543340486758_gs196.jpg",
-    fit: "contain",
-    alt: "Fig. 85.—Finishing Stove",
-  )
-  #align(center)[Fig. 85. — Finishing Stove]
+  #figure(
+    image(
+      "assets/fig85.jpg",
+      fit: "contain",
+      alt: "Fig. 85. — Finishing Stove",
+    ),
+    // caption: [Fig. 85. — Finishing Stove],
+    caption: [Finishing Stove],
+  )<fig85>
 ]
 
 Before removing the paper, one corner at a time should be lifted up, and the
@@ -3935,15 +4131,17 @@ The finisher should not glaire in more than he can tool the same day.
 When the glaire has ceased to be “tacky,” the gold is laid on.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs201.jpg", fit: "contain", alt: "Fig. 86.")
-  #align(center)[Fig. 86.]
+  #figure(
+    image("assets/fig86.jpg", fit: "contain", alt: "Fig. 86."),
+    // caption: [Fig. 86],
+    caption: [],
+  )<fig86>
 ]
 
 At first it will be found difficult to manage gold leaf.
 The essential conditions are, that there should be no draught, and that the
 cushion and knife should be quite free from grease.
-The gold cushion and knife are shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_86")[fig. 86] .
+The gold cushion and knife are shown at @fig86[fig. 86].
 A little powdered bath\-brick rubbed into the cushion will make it easier to cut
 the gold cleanly.
 The blade of the gold knife should never be touched with the hand, and before
@@ -3968,8 +4166,11 @@ than any other grease in common use by bookbinders, and is more readily washed
 out by benzine.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs202.jpg", fit: "contain", alt: "Fig. 87.")
-  #align(center)[Fig. 87.]
+  #figure(
+    image("assets/fig87.jpg", fit: "contain", alt: "Fig. 87."),
+    // caption: [Fig. 87],
+    caption: [],
+  )<fig87>
 ]
 
 If the gold cracks, or is not solid when pressed on the book, a second thickness
@@ -3977,7 +4178,7 @@ should be used.
 This will stay down if the under piece is lightly breathed upon.
 
 For narrow strips of gold for lines, a little pad covered with soft leather may
-be made, as in #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_87")[fig. 87].
+be made, as in @fig87[fig. 87].
 
 It will be found of advantage to first use the bottom leaf of gold in the book
 and then to begin at the top and work through, or else the bottom leaf will
@@ -4067,8 +4268,7 @@ points may cut into the leather.
 Short straight lines may be put in with pieces of line, and longer ones with a
 fillet.
 
-A one line fillet is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_88")[fig. 88];
+A one line fillet is shown at @fig88[fig. 88];
 the space filed out of the circumference is to enable lines to be joined
 neatly at the corners.
 That the lines may be clearly visible through the gold, the book should be
@@ -4079,12 +4279,15 @@ much metal in them, that the damp sponge or cotton used for cooling tools would
 very rapidly be dried up.
 When the fillet has been cooled, the edge should be rubbed on the cleaning pad,
 and the point exactly adjusted to the corner of the line to be run (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_88")[fig. 88] ).
+@fig88[fig. 88]).
 The fillet is then run along the line with even pressure.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs207.jpg", fit: "contain", alt: "Fig. 88.")
-  #align(center)[Fig. 88.]
+  #figure(
+    image("assets/fig88.jpg", fit: "contain", alt: "Fig. 88."),
+    // caption: [Fig. 88],
+    caption: [],
+  )<fig88>
 ]
 
 For slightly curved lines, a very small fillet may be used.
@@ -4176,13 +4379,15 @@ It is to be hoped that a perfectly elastic varnish, that will not tarnish the
 gold, will soon be discovered.
 
 As soon as the varnish is dry the boards may be pressed, one at a time, to give
-the leather a smooth surface (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_83")[fig. 83] ),
+the leather a smooth surface (see @fig83[fig. 83]),
 leaving each board in the press for some hours.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs212.jpg", fit: "contain", alt: "Fig. 89.")
-  #align(center)[Fig. 89.]
+  #figure(
+    image("assets/fig89.jpg", fit: "contain", alt: "Fig. 89."),
+    // caption: [Fig. 89],
+    caption: [],
+  )<fig89>
 ]
 
 After each board has been pressed separately the book should be shut, and
@@ -4198,7 +4403,7 @@ this turned\-up edge will be in the joint behind the back edge of the board when
 the book is shut.
 
 A small nipping\-press suitable for giving comparatively light pressure, is
-shown at #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_89")[fig. 89] .
+shown at @fig89[fig. 89].
 
 #heading(level: 5)[TOOLING ON VELLUM]
 
@@ -4224,8 +4429,7 @@ effect may be obtained by dots, leaves, and flowers, tooled over inlays of
 various colours.
 Leather for inlaying should be pared very thin.
 To do this the leather is cut into strips, wetted, and pared on a stone with a
-knife shaped somewhat as at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_60")[fig. 60] , B.
+knife shaped somewhat as at @fig60[fig. 60], B.
 When the thin leather is dry the inlays of the leaves and flowers, &c., may be
 stamped out with steel punches cut to the shape of the tools; or if only a few
 inlays are needed, the tools may be impressed on the thin leather, and the
@@ -4282,17 +4486,19 @@ has obvious advantages.
 A great deal depends on the design of the letters used.
 Nearly all bookbinders’ letters are made too narrow, and with too great
 difference between the thick and thin strokes.
-At #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_90")[fig. 90]
-is shown an alphabet, for which I am indebted to the kindness of Mr. Emery
-Walker.
+At @fig90[fig. 90] is shown an alphabet, for which I am indebted to the
+kindness of Mr. Emery Walker.
 The long tail of the Q is meant to go under the U.
 It might be well to have a second R cut, with a shorter tail, to avoid the great
 space left when an A happens to follow it.
 I have found that four sizes of letters are sufficient for all books.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs217.jpg", fit: "contain", alt: "Fig. 90.")
-  #align(center)[Fig. 90.]
+  #figure(
+    image("assets/fig90.jpg", fit: "contain", alt: "Fig. 90."),
+    // caption: [Fig. 90],
+    caption: [],
+  )<fig90>
 ]
 
 #table(
@@ -4300,14 +4506,20 @@ I have found that four sizes of letters are sufficient for all books.
   columns: 2,
   [
     #align(center)[
-      #image("assets/8609007543340486758_gs218.jpg", fit: "contain", alt: "Fig. 91.")
-      #align(center)[Fig. 91.]
+      #figure(
+        image("assets/fig91.jpg", fit: "contain", alt: "Fig. 91."),
+        // caption: [Fig. 91],
+        caption: [],
+      )<fig91>
     ]
   ],
   [
     #align(center)[
-      #image("assets/8609007543340486758_gs218a.jpg", fit: "contain", alt: "Fig. 92.")
-      #align(center)[Fig. 92.]
+      #figure(
+        image("assets/fig92.jpg", fit: "contain", alt: "Fig. 92."),
+        // caption: [Fig. 92],
+        caption: [],
+      )<fig92>
     ]
   ],
 )
@@ -4319,8 +4531,7 @@ This should give a line exactly at right angles to the top and bottom of the
 strip.
 Then make another fold the distance from the first of the width of the back;
 then bring the two folds together, and make a third fold in the exact centre.
-The paper should then be as shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_91")[fig. 91].
+The paper should then be as shown at @fig91[fig. 91].
 Supposing the lettering to be THE WORKS OF ROBERT LOUIS STEVENSON, select the
 size of letter you desire to use, and take an E and mark on a piece of spare
 paper a line of E’s, and laying your folded paper against it, see how many
@@ -4328,15 +4539,13 @@ letters will go in comfortably.
 Supposing you find that four lines of five letters of the selected size can be
 put in, you must see if your title can be conveniently cut up into four lines
 of five letters, or less.
-It might be done as shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_93")[fig. 93].
+It might be done as shown at @fig93[fig. 93].
 But if you prefer not to split the name STEVENSON, a smaller letter must be
-employed, and then the lettering may be as at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_94")[fig. 94] .
+employed, and then the lettering may be as at @fig94[fig. 94].
 
 To find out the position of the lines of lettering on a panel, the letter E is
 again taken and impressed five times at the side of the panel, as shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_92")[fig. 92],
+@fig92[fig. 92],
 leaving a little greater distance between the lowest letter and the bottom
 of the panel, than between the letters.
 The paper is then folded on the centre fold, and, with dividers set to the
@@ -4352,14 +4561,20 @@ letters must be put.
   columns: 2,
   [
     #align(center)[
-      #image("assets/8609007543340486758_gs219.jpg", fit: "contain", alt: "Fig. 93.")
-      #align(center)[Fig. 93.]
+      #figure(
+        image("assets/fig93.jpg", fit: "contain", alt: "Fig. 93."),
+        // caption: [Fig. 93],
+        caption: [],
+      )<fig93>
     ]
   ],
   [
     #align(center)[
-      #image("assets/8609007543340486758_gs219a.jpg", fit: "contain", alt: "Fig. 94.")
-      #align(center)[Fig. 94.]
+      #figure(
+        image("assets/fig94.jpg", fit: "contain", alt: "Fig. 94."),
+        // caption: [Fig. 94],
+        caption: [],
+      )<fig94>
     ]
   ],
 )
@@ -4377,8 +4592,7 @@ of course it cannot always be made to do this.
 The greatest difficulty will be found in making titles of books that consist of
 a single word, look well.
 Thus if you have “CORIOLANUS” to place on a back which is not more than 5\ ⁄8\
-\-inch wide, if it is put across as one word, as at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_95")[fig. 95] (1),
+\-inch wide, if it is put across as one word, as at @fig95[fig. 95] (1),
 it will be illegible from the smallness of the type, and will tell
 merely as a gold line at a little distance.
 If a reasonably large type is used, the word must be broken up somewhat, as at
@@ -4387,8 +4601,11 @@ The word may be put straight along the back, as at fig. (3), but this hardly
 looks well on a book with raised bands, and should be avoided unless necessary.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs221.jpg", fit: "contain", alt: "Fig. 95.")
-  #align(center)[Fig. 95.]
+  #figure(
+    image("assets/fig95.jpg", fit: "contain", alt: "Fig. 95."),
+    // caption: [Fig. 95],
+    caption: [],
+  )<fig95>
 ]
 
 The use of type of different sizes in lettering a book should be avoided when
@@ -4401,7 +4618,7 @@ It is especially allowable in cases where, in a set of volumes, there is one
 much thinner than the others.
 It is generally better to make some compromise with the lettering of the thin
 volume, than to spoil the lettering of the whole set by using too small a letter
-throughout (see #link("8523092203054335333_26672-h-2.htm.xhtml#Fig_115")[fig. 115] ).
+throughout (see @fig115[fig. 115]).
 
 On very thin books it is sometimes hardly possible to get any lettering at all
 on the back.
@@ -4430,8 +4647,11 @@ is recognised and accepted, very good results may be obtained.
 #heading(level: 5)[BLIND TOOLING]
 
 #align(center)[
-  #image("assets/8609007543340486758_gs223.jpg", fit: "contain", alt: "Fig. 96.")
-  #align(center)[Fig. 96.]
+  #figure(
+    image("assets/fig96.jpg", fit: "contain", alt: "Fig. 96."),
+    // caption: [Fig. 96],
+    caption: [],
+  )<fig96>
 ]
 
 At the end of the book characteristic examples of blind\-tooled books are given
@@ -4440,13 +4660,14 @@ At the end of the book characteristic examples of blind\-tooled books are given
 It will be seen that most of the tools form complete designs in themselves.
 Although the use of detached die\-sunk tools was general, there were also simple
 tools used, which, when combined, made up more or less organic designs, and
-allowed more freedom to the finisher (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_96")[figs.96]
-and #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_97")[97] ).
+allowed more freedom to the finisher (see @fig96[fig. 96] and @fig97[fig. 97]).
 
 #align(center)[
-  #image("assets/8609007543340486758_gs224.jpg", fit: "contain", alt: "Fig. 97.")
-  #align(center)[Fig. 97.]
+  #figure(
+    image("assets/fig97.jpg", fit: "contain", alt: "Fig. 97."),
+    // caption: [Fig. 97],
+    caption: [],
+  )<fig97>
 ]
 
 Some use may also be made of interlaced strap\-work designs, either worked with
@@ -4462,8 +4683,11 @@ made out, and the tools blinded through the paper, as described for gold
 tooling.
 The leather is then damped with water, and the impressions retooled.
 
-#image("assets/8609007543340486758_gs225.jpg", fit: "contain", alt: "Fig. 98.")
-#align(center)[Fig. 98.]
+#figure(
+  image("assets/fig98.jpg", fit: "contain", alt: "Fig. 98."),
+  // caption: [Fig. 98],
+  caption: [],
+)<fig98>
 
 The panel lines on most of the bindings before 1500 show evidence of having been
 put in with a tool which has been pushed along the leather, and not with a
@@ -4471,13 +4695,11 @@ wheel.
 I have found that a tool guided by a straight\-edge, and “jiggered” backwards
 and forwards, makes by far the best lines for blind\-tool work.
 It should be borne in mind that the line is formed by the raised portion of
-leather, and so the tool should be cut somewhat as at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_98")[fig. 98] .
+leather, and so the tool should be cut somewhat as at @fig98[fig. 98].
 This should leave three ridges on the leather.
 Blind tooling may be gone over and over until it is deep enough, and may be
 combined with various other methods of working.
-For instance, in tooling such a spray as is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_99")[fig. 99],
+For instance, in tooling such a spray as is shown at @fig99[fig. 99],
 the leaf would be formed by five impressions of the second tool, shown at
 A, the extremity of the impressions could be joined with gouges, the stalk and
 veining could either be run in with a fillet or worked with gouges.
@@ -4493,8 +4715,12 @@ throw up the pattern.
 
 Blind tooling can sometimes be used in combination with gold tooling.
 
-#align(right)[ #image("assets/8609007543340486758_gs226.jpg", fit: "contain", alt: "Fig. 99.")
-  #align(center)[Fig. 99.]
+#align(right)[
+  #figure(
+    image("assets/fig99.jpg", fit: "contain", alt: "Fig. 99."),
+    // caption: [Fig. 99],
+    caption: [],
+  )<fig99>
 ]
 
 In the fifteenth century the Venetian binders used little roundels of some
@@ -4600,12 +4826,14 @@ The heat needed is about the same as for hand tooling.
 line, and fillets are to be had ready\-made at most dealers.
 Other tools are best designed and cut to order.
 At first only a few simple forms will be needed, such as one or two flowers of
-different sizes, and one or two sets of leaves (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_100")[fig. 100]).
+different sizes, and one or two sets of leaves (see @fig100[fig. 100]).
 
 #align(center)[
-  #image("assets/8609007543340486758_gs231.jpg", fit: "contain", alt: "Fig. 100 (reduced)")
-  #align(center)[Fig. 100 (reduced)]
+  #figure(
+    image("assets/fig100.jpg", fit: "contain", alt: "Fig. 100 (reduced)"),
+    // caption: [Fig. 100 (reduced)],
+    caption: [(reduced)],
+  )<fig100>
 ]
 
 In designing tools, it must be borne in mind that they may appear on the book
@@ -4615,7 +4843,7 @@ irregularities, may look charming, but if a tool is cut from it, any marked
 irregularity becomes extremely annoying when repeated several times on a cover.
 So with leaves, unless they are perfectly symmetrical, there should be three of
 each shape cut, two curving in different directions, and the third quite
-straight (see #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_101")[fig. 101]).
+straight (see @fig101[fig. 101]).
 To have only one leaf, and to have that curved, produces very restless patterns.
 The essence of gold\-tool design, is that patterns are made up of repeats of
 impressions of tools, and that being so, the tools must be so designed that they
@@ -4623,8 +4851,11 @@ will repeat pleasantly, and in practice it will be found that any but simple
 forms will become aggressive in repetition.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs232.jpg", fit: "contain", alt: "Fig. 101.")
-  #align(center)[Fig. 101.]
+  #figure(
+    image("assets/fig101.jpg", fit: "contain", alt: "Fig. 101."),
+    // caption: [Fig. 101],
+    caption: [],
+  )<fig101>
 ]
 
 Designs for tools should be made out with Indian ink on white paper, and they
@@ -4633,8 +4864,7 @@ The tool\-cutter will reduce any drawing to any desired size, and will, from one
 drawing, cut any number of tools of different sizes.
 Thus, if a set of five leaves of the same shape is wanted, it will only be
 necessary to draw one, and to indicate the sizes the others are to be in some
-such way as shown at
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_102")[fig. 102].
+such way as shown at @fig102[fig. 102].
 
 It is not suggested that special tools should be cut for each pattern, but the
 need of new tools will naturally arise from time to time, and so the stock be
@@ -4647,8 +4877,11 @@ than to try to design a complete set when starting.
 #pagebreak()
 
 #align(center)[
-  #image("assets/8609007543340486758_gs233.jpg", fit: "contain", alt: "Fig. 102.")
-  #align(center)[Fig. 102.]
+  #figure(
+    image("assets/fig102.jpg", fit: "contain", alt: "Fig. 102."),
+    // caption: [Fig. 102],
+    caption: [],
+  )<fig102>
 ]
 
 Tools may be solid or in outline.
@@ -4669,14 +4902,12 @@ eccentricities are avoided, probably have life and individual interest.
 
 Perhaps the easiest way to decorate a binding is to cover it with some small
 repeating pattern.
-A simple form of diaper as a beginning is shown at
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_104")[fig. 104] .
+A simple form of diaper as a beginning is shown at @fig104[fig. 104].
 To make such a pattern cut a piece of good, thin paper to the size of the board
 of a book, and with a pencil rule a line about an eighth of an inch inside the
 margin all round.
 Then with the point of a fine folder that will indent, but not cut the paper,
-mark up as shown in
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_103")[fig. 103] .
+mark up as shown in @fig103[fig. 103].
 The position of the lines A A and B B are found by simply folding the paper,
 first side to side, and then head to tail.
 The other lines can be put in without any measurement by simply joining all
@@ -4689,18 +4920,24 @@ It is then evident that a repeating design to fill any one of the spaces can be
 made to cover the whole surface.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs235.jpg", fit: "contain", alt: "Fig. 103.")
-  #align(center)[Fig. 103.]
+  #figure(
+    image("assets/fig103.jpg", fit: "contain", alt: "Fig. 103."),
+    // caption: [Fig. 103],
+    caption: [],
+  )<fig103>
 ]
 
-In #link("8523092203054335333_26672-h-2.htm.xhtml#Fig_104")[fig. 104],
+In @fig104[fig. 104],
 it is the diagonal lines only that are utilised for the pattern.
 To avoid confusion, the cross lines that helped to determine the position of the
 diagonals are not shown.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs236.jpg", fit: "contain", alt: "Fig. 104 (reduced)")
-  #align(center)[Fig. 104 (reduced)]
+  #figure(
+    image("assets/fig104.jpg", fit: "contain", alt: "Fig. 104 (reduced)"),
+    // caption: [Fig. 104 (reduced)],
+    caption: [(reduced)],
+  )<fig104>
 ]
 
 The advantage of using the point of a folder to mark up the constructional lines
@@ -4717,12 +4954,14 @@ line, and put a stalk in below each flower; then a leaf put in on each side of
 the straight line will complete the pattern.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs238.jpg", fit: "contain", alt: "Fig. 105 (reduced)")
-  #align(center)[Fig. 105 (reduced)]
+  #figure(
+    image("assets/fig105.jpg", fit: "contain", alt: "Fig. 105 (reduced)"),
+    // caption: [Fig. 105 (reduced)],
+    caption: [(reduced)],
+  )<fig105>
 ]
 
-A development of the same principle is shown at
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_105")[fig. 105] ,
+A development of the same principle is shown at @fig105[fig. 105],
 in which some gouges are introduced.
 Any number of other combinations will occur to any one using the tools.
 Frequently questions will arise as to whether a tool is to be put this way or
@@ -4739,8 +4978,11 @@ The designer, after a little practice, will be bewildered by the infinite number
 of combinations that occur to him.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs240.jpg", fit: "contain", alt: "Fig. 106 (reduced)")
-  #align(center)[Fig. 106 (reduced)]
+  #figure(
+    image("assets/fig106.jpg", fit: "contain", alt: "Fig. 106 (reduced)"),
+    // caption: [Fig. 106 (reduced)],
+    caption: [(reduced)],
+  )<fig106>
 ]
 
 The diaper is selected for a beginning, because it is the easiest form of
@@ -4758,18 +5000,19 @@ conditions, and concentrating, on one book cover, the practice that might be
 spread over several backs and sides more sparingly decorated, when variety of
 conditions would confuse the student.
 
-#image("assets/8609007543340486758_gs241.jpg", fit: "contain", alt: "Fig. 107.")
-#align(center)[Fig. 107.]
+#figure(
+  image("assets/fig107.jpg", fit: "contain", alt: "Fig. 107."),
+  // caption: [Fig. 107],
+  caption: [],
+)<fig107>
 
 When the principles of the diaper have been mastered, and the student has become
 familiar with the limitations of his tools, other schemes of decoration may be
 attempted, such as borders, centres, or panels.
 
-A form of border connected with cross\-lines is shown at
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_106")[fig. 106] .
+A form of border connected with cross\-lines is shown at @fig106[fig. 106].
 This is made up of a repeat of the spray built up of three tools and four gouges
-shown at #link("8523092203054335333_26672-h-2.htm.xhtml#Fig_107")[fig. 107],
-with slight modification at the corners.
+shown at @fig107[fig. 107], with slight modification at the corners.
 Other schemes for borders are those in which flowers grow inwards from the edge
 of the boards, or outwards from a panel at the centre, or on both sides of a
 line about half an inch from the edge.
@@ -4779,14 +5022,16 @@ first, are best built up on the same principle—the repeat of some simple
 element.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs243.jpg", fit: "contain", alt: "Fig. 108 (reduced)")
-  #align(center)[Fig. 108 (reduced)]
+  #figure(
+    image("assets/fig108.jpg", fit: "contain", alt: "Fig. 108 (reduced)"),
+    // caption: [Fig. 108 (reduced)],
+    caption: [(reduced)],
+  )<fig108>
 ]
 
 The decoration may be concentrated on parts of the cover, such as the centre or
 corners.
-A design for a centre is shown at
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_108")[fig. 108],
+A design for a centre is shown at @fig108[fig. 108],
 and below is shown the way to construct it.
 A piece of paper is folded, as shown by the dotted lines, and an eighth of the
 pattern drawn with a soft pencil and folded over on the line A, and transferred
@@ -4798,7 +5043,7 @@ The overs and unders of the lines are then marked, and gouges selected to fit.
 Of course it will take several trials before the lines will interlace
 pleasantly, and the tools fit in.
 Another centre, in which a spray is repeated three times, is shown at
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_109")[fig. 109],
+@fig109[fig. 109],
 and any number of others will occur to the student after a little practice.
 A change of tools, or the slight alteration of a line, will give an entirely new
 aspect to a pattern.
@@ -4811,12 +5056,15 @@ Although at first glance it seems an intricate design, it is made up like the
 others of repetitions of simple forms.
 
 #align(center)[
-  #image(
-    "assets/8609007543340486758_gs244.jpg",
-    fit: "contain",
-    alt: "Fig. 109 (reduced)",
-  )
-  #align(center)[Fig. 109 (reduced)]
+  #figure(
+    image(
+      "assets/fig109.jpg",
+      fit: "contain",
+      alt: "Fig. 109 (reduced)",
+    ),
+    // caption: [Fig. 109 (reduced)],
+    caption: [(reduced)],
+  )<fig109>
 ]
 
 When the student has become proficient in the arrangement of tools in
@@ -4824,18 +5072,19 @@ combination with lines, a design consisting entirely, or almost entirely, of
 lines may be tried.
 This is more difficult, because the limitations are not so obvious; but here
 again the principle of repetition, and even distribution, should be followed.
-At #link("8523092203054335333_26672-h-2.htm.xhtml#Fig_110")[fig. 110]
-is shown a design almost entirely composed of lines, built up on the same
-principle as the centre at
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_108")[fig. 108].
+At @fig110[fig. 110] is shown a design almost entirely composed of lines,
+built up on the same principle as the centre at @fig108[fig. 108].
 
 #align(center)[
-  #image(
-    "assets/8609007543340486758_gs245.jpg",
-    fit: "contain",
-    alt: "Fig. 110 (reduced)",
-  )
-  #align(center)[Fig. 110 (reduced)]
+  #figure(
+    image(
+      "assets/fig110.jpg",
+      fit: "contain",
+      alt: "Fig. 110 (reduced)",
+    ),
+    // caption: [Fig. 110 (reduced)],
+    caption: [(reduced)],
+  )<fig110>
 ]
 
 The ends of the bands form a very pleasant starting\-place for patterns.
@@ -4894,8 +5143,11 @@ weak curves, students are advised at first to restrict the curved lines in their
 patterns to such as can be readily worked with gouges.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs248.jpg", fit: "contain", alt: "Fig. 111.")
-  #align(center)[Fig. 111.]
+  #figure(
+    image("assets/fig111.jpg", fit: "contain", alt: "Fig. 111."),
+    // caption: [Fig. 111],
+    caption: [],
+  )<fig111>
 ]
 
 It must be remembered that a gouge or fillet line is very thin, and will look
@@ -4905,8 +5157,7 @@ For this reason interlaced lines are advocated.
 Gouge lines are easier to work, and look better, if a small space is left where
 the gouges end.
 This is especially the case where lines bearing leaves or flowers branch from
-the main stem
-(see #link("8523092203054335333_26672-h-2.htm.xhtml#Fig_111")[fig. 111]).
+the main stem (see @fig111[fig. 111]).
 
 Gouges and fillets need not always be of the same thickness of line, and two or
 three sets of different gauges may be kept.
@@ -4918,46 +5169,48 @@ Provided the idea is consistently adhered to throughout, such a pattern is often
 very successful.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs249.jpg", fit: "contain", alt: "Fig. 112.")
-  #align(center)[Fig. 112.]
+  #figure(
+    image("assets/fig112.jpg", fit: "contain", alt: "Fig. 112."),
+    // caption: [Fig. 112],
+    caption: [],
+  )<fig112>
 ]
 
 A simple arrangement of straight lines will be sufficient ornamentation for most
 books.
 Three schemes for such ornamentation are shown.
-In #link("8523092203054335333_26672-h-2.htm.xhtml#Fig_112")[fig. 112]
-the “tie\-downs” may be in “blind” and the lines in gold.
-The arrangement shown at
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_113")[fig. 113]
+In @fig112[fig. 112] the “tie\-downs” may be in “blind” and the lines in gold.
+The arrangement shown at @fig113[fig. 113]
 leaves a panel at the top which may be utilised for lettering.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs250.jpg", fit: "contain", alt: "Fig. 113.")
-  #align(center)[Fig. 113.]
+  #figure(
+    image("assets/fig113.jpg", fit: "contain", alt: "Fig. 113."),
+    // caption: [Fig. 113],
+    caption: [],
+  )<fig113>
 ]
 
 #align(center)[
-  #image("assets/8609007543340486758_gs250a.jpg", fit: "contain", alt: "Fig. 114.")
-  #align(center)[Fig. 114.]
+  #figure(
+    image("assets/fig114.jpg", fit: "contain", alt: "Fig. 114."),
+    // caption: [Fig. 114],
+    caption: [],
+  )<fig114>
 ]
 
-#table(
-  stroke: none,
-  columns: 2,
-  [
-    #align(center)[
-      #image("assets/8609007543340486758_gs251.jpg", fit: "contain", alt: "Fig. 115.")
-    ]
-  ],
-  [
-    #align(center)[
-      #image("assets/8609007543340486758_gs252.jpg", fit: "contain", alt: "Fig. 115.")
-    ]
-  ],
-  table.cell(colspan: 2)[
-    #align(center)[Fig. 115.]
-  ],
-)
+#align(center)[
+  #figure(
+    grid(
+      columns: (1fr, 1fr),
+      gutter: 5mm,
+      image("assets/fig115.jpg", fit: "contain", alt: "Fig. 115 A"),
+      image("assets/fig115_2.jpg", fit: "contain", alt: "Fig. 115 B"),
+    ),
+    // caption: [Fig. 115],
+    caption: [],
+  )<fig115>
+]
 
 #heading(level: 5)[DESIGNING FOR BACKS]
 
@@ -4974,25 +5227,25 @@ A design may be made to fit one panel of the book and repeated on all those not
 required for lettering (see pages
 #link("8523092203054335333_26672-h-2.htm.xhtml#Page_332")[332] \-
 #link("8523092203054335333_26672-h-2.htm.xhtml#Page_334")[34]),
-or it may be made to grow up from panel to panel (see
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_115")[fig. 115]).
+or it may be made to grow up from panel to panel (see @fig115[fig. 115]).
 In the case of sets of books in which the volumes vary very much in thickness,
 some pattern must be made that can be contracted and expanded without altering
-the general look of the back (see
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_115")[fig. 115]).
+the general look of the back (see @fig115[fig. 115]).
 
 #heading(level: 5)[DESIGNING FOR INSIDE OF BOARDS]
 
 The inside margins of the board permit of a little delicate decoration.
-At #link("8523092203054335333_26672-h-2.htm.xhtml#Fig_116")[fig. 116]
-are shown two ways of treating this part of the binding.
+At @fig116[fig. 116] are shown two ways of treating this part of the binding.
 The inside of the board is sometimes covered all over with leather, and tooled
 as elaborately, or more elaborately, than the outside.
 If there are vellum ends, they may be enriched with a little tooling.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs254.jpg", fit: "contain", alt: "Fig. 116.")
-  #align(center)[Fig. 116.]
+  #figure(
+    image("assets/fig116.jpg", fit: "contain", alt: "Fig. 116."),
+    // caption: [Fig. 116],
+    caption: [],
+  )<fig116>
 ]
 
 The edges of the boards may have a gold line run on them, and the head\-cap may
@@ -5013,7 +5266,7 @@ to the board; or if there is a leather joint, the panel left should be filled in
 to match the end paper.
 
 To paste down end papers, the book is placed on the block with the board open
-(see #link("8523092203054335333_26672-h-2.htm.xhtml#Fig_117")[fig. 117], A),
+(see @fig117[fig. 117], A),
 the waste sheets are torn off, the joints cleared of any glue or
 paste, and the boards flattened, as described at page
 #link("8523092203054335333_26672-h-1.htm.xhtml#Page_171")[171] for pasting down
@@ -5025,14 +5278,17 @@ edge of the board.
 A cutting tin is then placed on the book, the paste\-down paper turned over it,
 and the edges trimmed off to the divider points with a knife and straight\-edge,
 leaving small pieces to cover the ends of the joint (
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_117")[fig. 117] , A, c).
+@fig117[fig. 117], A, c).
 
 The cutting and pasting down of these small pieces in the joint are rather
 difficult; they should come exactly to the edges of the board.
 
 #align(center)[
-  #image("assets/8609007543340486758_gs256.jpg", fit: "contain", alt: "Fig. 117.")
-  #align(center)[Fig. 117.]
+  #figure(
+    image("assets/fig117.jpg", fit: "contain", alt: "Fig. 117."),
+    // caption: [Fig. 117],
+    caption: [],
+  )<fig117>
 ]
 
 When both paste\-down papers are trimmed to size, one of them is well pasted
@@ -5062,14 +5318,14 @@ make it look dirty.
 
 When one side is pasted down the book can be turned over without shutting the
 board, and the other board opened and pasted down in the same way (see
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_117")[fig. 117], B).
+@fig117[fig. 117], B).
 In turning over a book, a piece of white paper should be put under the
 newly\-pasted side, as, being damp, it will soil very readily.
 When both ends have been pasted down the joints should be examined and rubbed
 down again, and the book stood up on end with the boards open until the end
 papers are dry.
 The boards may be held open with a piece of cardboard cut as shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_71")[fig. 71].
+@fig71[fig. 71].
 
 If there are cloth joints they are put down with glue, and the board paper is
 placed nearly to the edge of the joint, leaving very little cloth visible.
@@ -5129,12 +5385,15 @@ As nearly all books are now kept in bookshelves, and as any projection on the
 side of a book is likely to injure the neighbouring volume, a form of clasp
 should be used that has no raised parts on the boards.
 
-#image("assets/8609007543340486758_gs261.jpg", fit: "contain", alt: "Fig. 118.")
-#align(center)[Fig. 118.]
+#figure(
+  image("assets/fig118.jpg", fit: "contain", alt: "Fig. 118."),
+  // caption: [Fig. 118],
+  caption: [],
+)<fig118>
 
-At #link("8523092203054335333_26672-h-2.htm.xhtml#Fig_118")[fig. 118]
-is shown a simple clasp suitable for small books with mill\-board sides,
-with details of the metal parts, made of thick silver wire below.
+At @fig118[fig. 118] is shown a simple clasp suitable for small books with
+mill\-board sides, with details of the metal parts, made of thick silver wire
+below.
 Double boards must be “made,” and the flattened ends of the silver catch
 inserted between the two thicknesses, and glued in place.
 About one\-eighth of an inch of the end should project.
@@ -5149,20 +5408,22 @@ covering, to make a depression in which the plait will lie, and a depression may
 be scooped out of the inner surface of the board to receive the ends.
 
 #align(right)[
-  #image("assets/8609007543340486758_gs262.jpg", fit: "contain", alt: "Fig. 119.")
-  #align(center)[Fig. 119.]
+  #figure(
+    image("assets/fig119.jpg", fit: "contain", alt: "Fig. 119."),
+    // caption: [Fig. 119],
+    caption: [],
+  )<fig119>
 ]
 
-At #link("8523092203054335333_26672-h-2.htm.xhtml#Fig_119")[fig. 119]
-is a somewhat similar clasp with three plaits suitable for large books.
+At @fig119[fig. 119] is a somewhat similar clasp with three plaits suitable
+for large books.
 The metal end and the method of inserting it into wooden boards are shown below.
 The turned\-down end should go right through the board, and be riveted on the
 inside.
 When the three plaits are worked, a little band of silver may be riveted on just
 below the ring.
 
-A very simple fastening that is sometimes useful is shown at
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_77")[fig. 77].
+A very simple fastening that is sometimes useful is shown at @fig77[fig. 77].
 A very small bead is threaded on to a piece of catgut, and the two ends of the
 gut brought together and put through a larger bead.
 The ends of the gut with the beads on them are laced into the top board of the
@@ -6063,13 +6324,16 @@ If bindings have projecting metal corners or clasps that are likely to scratch
 the neighbouring books, pieces of mill\-board, which may be lined with leather
 or good paper, should be placed next them, or they may have a cover made of a
 piece of mill\-board bent round as shown at
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_120")[fig. 120],
+@fig120[fig. 120],
 and strengthened at the folds with linen.
 This may be slipped into the shelf with the book with the open end outwards, and
 will then hardly be seen.
 
-#image("assets/8609007543340486758_gs305.jpg", fit: "contain", alt: "Fig. 120.")
-#align(center)[Fig. 120.]
+#figure(
+  image("assets/fig120.jpg", fit: "contain", alt: "Fig. 120."),
+  // caption: [Fig. 120],
+  caption: [],
+)<fig120>
 
 Bindings which have previously had metal clasps, &c., often have projecting
 fragments of the old nails.
@@ -6293,7 +6557,7 @@ gathered from the binding, book\-plates, marginal notes, names of former owners,
 the sides of books.
 
 #emph[Backing boards], wedge\-shaped bevelled boards used in backing (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_40")[Fig. 40] ).
+@fig40[Fig. 40]).
 
 #emph[Backing machine], used for backing cheap work in large quantities; it
 often crushes and damages the backs of the sections.
@@ -6302,7 +6566,7 @@ often crushes and damages the backs of the sections.
 (2) The ridges on the back caused by the bands showing through the leather.
 
 #emph[Band nippers], pincers with flat jaws, used for straightening the bands
-(see #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_61")[Fig. 61] ).
+(see @fig61[Fig. 61]).
 For nipping up the leather after covering, they should be nickelled to prevent
 the iron staining the leather.
 
@@ -6336,7 +6600,7 @@ on.
 
 #emph[Cutting press], when the lying press is turned, so that the side with the
 runners is uppermost, it is called a cutting press (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_46")[Fig. 46] ).
+@fig46[Fig. 46]).
 
 #emph[Diaper], a term applied to a small repeating all\-over pattern.
 From woven material decorated in this way.
@@ -6352,7 +6616,7 @@ binder.
 #emph[Finishing], comprises lettering, tooling, and polishing, &c.
 
 #emph[Finishing press], a small press used for holding books when they are being
-tooled (see #link("8523092203054335333_26672-h-1.htm.xhtml#Fig_84")[Fig. 84] ).
+tooled (see @fig84[Fig. 84]).
 
 #emph[Finishing stove], used for heating finishing tools.
 
@@ -6377,7 +6641,7 @@ sides, a book is said to be half bound.
 back.
 
 #emph[Head cap], the fold of leather over the head band (see
-#link("8523092203054335333_26672-h-1.htm.xhtml#Fig_67")[Fig. 67] ).
+@fig67[Fig. 67]).
 
 #emph[Head and tail], the top and bottom of a book.
 
@@ -6389,12 +6653,10 @@ to be replaced.
 paper.
 
 #emph[Inset], the portion of a sheet cut off and inserted in folding certain
-sizes, such as duodecimo, &c.
-(see #link("8523092203054335333_26672-h-0.htm.xhtml#Fig_4")[Fig. 4] ).
+sizes, such as duodecimo, &c. (see @fig4[Fig. 4]).
 
 #emph[Inside margins], the border made by the turn in of the leather on the
-inside face of the boards (see
-#link("8523092203054335333_26672-h-2.htm.xhtml#Fig_116")[Fig. 116] ).
+inside face of the boards (see @fig116[Fig. 116]).
 
 #emph[Joints], (1) the groove formed in backing to receive the ends of the
 mill\-boards.
