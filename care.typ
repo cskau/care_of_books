@@ -1,3 +1,5 @@
+#import "@preview/in-dexter:0.7.2": *
+
 #set document(
   author: "Douglas Cockerell",
   title: "Bookbinding, and the Care of Books / A Handbook for Amateurs, Bookbinders & Librarians"
@@ -9,10 +11,17 @@
   margin: (
     inside: 11mm,
     outside: 8mm,
-    // y: 1.75cm,
+    bottom: 10mm,
   ),
   binding: left,
+  // footer-descent: 50%,
 )
+
+// Don't show page number on empty pages.
+#show selector.or(
+  pagebreak.where(to: "odd"),
+  pagebreak.where(to: "even"),
+): set page(header: none, footer: none)
 
 #set text(
   font: "EB Garamond 12",
@@ -57,26 +66,14 @@
 
 #show heading: set par(justify: true)
 
-// // Render figure supplement when there is no caption.
-// #show figure: it => {
-//   if it.caption == none {
-//     it.body
-//     // v(it.gap)
-//     text(weight: "bold")[
-//       #it.supplement
-//       #counter(figure.where(kind: it.kind)).display(it.numbering)
-//     ]
-//   } else {
-//     it
-//   }
-// }
-
 // Show just supplement (no colon) if caption is empty.
 #show figure.caption: it => [
   #if it.body == [] {
-    block[#strong([Figure #it.counter.display(it.numbering)])]
+    block[#strong([#it.supplement #it.counter.display(it.numbering)])]
+  } else if it.supplement == [] {
+    block[#it.body]
   } else {
-    block[#strong([Figure #it.counter.display(it.numbering) —]) #it.body]
+    block[#strong([#it.supplement #it.counter.display(it.numbering) —]) #it.body]
   }
 ]
 
@@ -116,6 +113,11 @@
   )
 })
 
+// Helper to guesstimate the size of a table cell with n lines in it.
+#let lines(n, font-size: 0.8em, leading: 0.5em, inset: 5pt) = {
+  return (n * font-size) + ((n - 1) * leading) + (inset * 2)
+}
+
 // #let part(body) = {
 //   [
 //     // Space before heading.
@@ -150,6 +152,9 @@
 
 
 // Half-title.
+
+// No page numbers for the non-content pages.
+#set page(numbering: none)
 
 #v(8em)
 
@@ -246,6 +251,8 @@ D. APPLETON AND COMPANY
 // Preface.
 
 #pagebreak(to: "odd")
+
+#set page(numbering: "1")
 
 #heading(level: 2)[EDITOR’S PREFACE]
 
@@ -969,7 +976,7 @@ a pan of slightly warm water and left to soak until they float apart, then with
 a soft brush any remaining glue or paste can be easily removed while in the
 water.
 Care must be taken not to soak modern books printed on what is called “Art
-Paper,” as this paper will hardly stand ordinary handling, and is absolutely
+Paper,” #index[Art paper] as this paper will hardly stand ordinary handling, and is absolutely
 ruined if wetted.
 The growing use of this paper in important books is one of the greatest troubles
 the bookbinder has to face.
@@ -1248,12 +1255,30 @@ then the next pair, 5 and 11, then 3 and 13, and then the outside pair, 1 and
 15, which should have the guard outside.
 A plan for the whole book would be more conveniently written thus—
 
-// TODO: Grid?
 #align(center)[
-1\-15  17\-31  33\-47 \
-3\-13  19\-29  35\-45 \
-5\-11  21\-27  37\-43 \
-7\-9   23\-25  39\-41, and so on.
+  #block(breakable: false)[
+    #grid(
+      columns: 3,
+      column-gutter: 2em,
+      row-gutter: 0.4em,
+
+      align(left)[1\-15],
+      align(left)[17\-31],
+      align(left)[33\-47],
+
+      align(left)[3\-13],
+      align(left)[19\-29],
+      align(left)[35\-45],
+
+      align(left)[5\-11],
+      align(left)[21\-27],
+      align(left)[37\-43],
+
+      align(left)[7\-9],
+      align(left)[23\-25],
+      align(left)[39\-41, and so on.],
+    )
+  ]
 ]
 
 To arrange a book of single leaves for guarding, it is convenient to take as
@@ -1930,6 +1955,7 @@ mark the book.
 In order to make books solid, that is, to make the leaves lie evenly and closely
 to one another, it was formerly the custom to beat books on a “stone” with a
 heavy hammer.
+#index[Beating] #index[Beating stone]
 This process has been superseded by the rolling\-press; but with the admirable
 presses that are now to be had, simple pressing will be found to be sufficient
 for the “extra” binder.
@@ -2528,6 +2554,8 @@ very difficult to get it even afterwards.
 
 #heading(level: 4)[ROUNDING AND BACKING]
 
+#index[Backing]
+
 The amount of rounding on the back of a book should be determined by the
 necessities of the case; that is to say, a back that has, through guarding, or
 excess of sewing, a tendency to be round, is best not forced to be flat, and a
@@ -2725,6 +2753,8 @@ will be disfigured inside by creases in the paper.
     ]
   ],
 )
+
+#index[Backing hammer]
 
 It is a mistake to suppose that a very heavy hammer is necessary for backing
 any but the largest books.
@@ -3383,6 +3413,8 @@ best further lined up between the bands with linen, or thin leather.
 This can be put on by pasting the linen or leather and giving the back a very
 thin coat of glue.
 
+#index[Back, lining up]
+
 #align(right)[
   #figure(
     image(
@@ -3552,7 +3584,9 @@ Before covering, the bands should be nipped up with band nippers
 The coverer should have ready before covering a clean paring stone, one or two
 folders, a pair of nickeled\-band nippers, a clean sponge, a little water in a
 saucer, a piece of thread, and a strip of smooth wood (boxwood for preference),
-called a band stick, used for smoothing the leather between the bands, a pair
+called a band stick,
+#index[Bandstick]
+used for smoothing the leather between the bands, a pair
 of scissors, and a small sharp knife, a pair of waterproof sheets the size of
 the book, and, if the book is a large one, a pair of tying up boards, with
 tying up string, and two strips of wood covered in blotting\-paper or leather.
@@ -3573,6 +3607,8 @@ used by photographers.
     caption: [],
   )<fig61>
 ]
+
+#index[Band nippers]
 
 When these things are ready, the pasted cover should be examined and repasted if
 it has dried in any place.
@@ -3645,6 +3681,8 @@ Care must be taken throughout not to soil the edges of the leaves.
     caption: [],
   )<fig63>
 ]
+
+#index[Band nippers]
 
 #align(center)[
   #figure(
@@ -4007,9 +4045,9 @@ dirty.
   )<fig73>
 ]
 
-Autograph letters may be mounted in the following ways:—If the letter is written
-upon both sides of a single leaf, it may be either “inlaid,” or guarded, as
-shown at @fig74, A.
+Autograph letters #index[Autograph letters] may be mounted in the following ways:
+— If the letter is written upon both sides of a single leaf, it may be either
+“inlaid,” or guarded, as shown at @fig74, A.
 A letter on a folded sheet of notepaper should have the folds strengthened with
 a guard of strong thin paper, and be attached by a guard made, as shown at
 @fig74, B;
@@ -5222,6 +5260,7 @@ It is an old and good custom to put the arms of the owner of a library on the
 covers of the books he has bound.
 The traditional, and certainly one of the best ways to do this, is to have an
 arms block designed and cut.
+#index[Arms block]
 To design an arms block, knowledge of heraldry is needed, and also some clear
 idea of the effect to be aimed at.
 A very common mistake in designing blocks is to try and get the effect of hand
@@ -5254,6 +5293,7 @@ Generally, if the centre of the block is in a line with the centre band of a
 book with five bands, it will look right.
 
 Blocks are struck with the aid of an arming or blocking press.
+#index[Arming press]
 The block is attached to the movable plate of the press called the “platen.”
 To do this some stout brown paper is first glued to the platen, and the block
 glued to this, and the platen fixed in its place at the bottom of the
@@ -6387,8 +6427,8 @@ newspapers and other ephemeral literature, but when, as is often the case, paper
 of very poor quality is used for books of permanent literary interest, the
 matter is serious enough.
 
-Among the worst papers made are the heavily loaded “Art” papers that are
-prepared for the printing of half\-toned process blocks.
+Among the worst papers made are the heavily loaded “Art” papers #index[Art paper]
+that are prepared for the printing of half\-toned process blocks.
 It is to be hoped that before long the paper makers will produce a paper that,
 while suitable for printing half\-toned blocks, will be more serviceable, and
 will have a less unpleasant surface.
@@ -6419,24 +6459,25 @@ make it up in quires.
 They put some gum in the water in which they macerate the raggs.
 The mark we find on the sheets is formed in the wyre.”
 
-The following are the more usual sizes of printing papers—
+The following are the more usual sizes of printing papers —
 
-#table(
-  stroke: none,
-  columns: 2,
-  [ ], [Inches.],
-  [Foolscap], [17 × 13½],
-  [Crown], [20 × 15],
-  [Post], [19¼ × 15½],
-  [Demy], [22½ × 17½],
-  [Medium], [24 × 19],
-  [Royal], [25 × 20],
-  [Double Pott], [25 × 15],
-  [" Foolscap], [27 × 17],
-  [Super Royal], [27 × 21],
-  [Double Crown], [30 × 20],
-  [Imperial], [30 × 22],
-  [Double Post], [31½ × 19½],
+#grid(
+  columns: (auto, auto, auto, auto),
+  column-gutter: 0.8em,
+  row-gutter: 0.5em,
+  [ ], grid.cell(colspan: 3, align(center)[Inches.]),
+  [Foolscap #box(width: 1fr, repeat(" . "))], [17], [×], [13½],
+  [Crown #box(width: 1fr, repeat(" . "))], [20], [×], [15],
+  [Post #box(width: 1fr, repeat(" . "))], [19¼], [×], [15½],
+  [Demy #box(width: 1fr, repeat(" . "))], [22½], [×], [17½],
+  [Medium #box(width: 1fr, repeat(" . "))], [24], [×], [19],
+  [Royal #box(width: 1fr, repeat(" . "))], [25], [×], [20],
+  [Double Pott #box(width: 1fr, repeat(" . "))], [25], [×], [15],
+  [#h(1.3em) " #h(1.3em) Foolscap #box(width: 1fr, repeat(" . "))], [27], [×], [17],
+  [Super Royal #box(width: 1fr, repeat(" . "))], [27], [×], [21],
+  [Double Crown #box(width: 1fr, repeat(" . "))], [30], [×], [20],
+  [Imperial #box(width: 1fr, repeat(" . "))], [30], [×], [22],
+  [Double Post #box(width: 1fr, repeat(" . "))], [31½], [×], [19½],
 )<paper-sizes>
 
 The corresponding sizes of hand\-made papers may differ slightly from the above.
@@ -6940,172 +6981,360 @@ gathered from the binding, book\-plates, marginal notes, names of former owners,
 
 #pagebreak(to: "even")
 
-// #heading(level: 5)[
-SPECIFICATIONS FOR BOOKBINDING
-// ]
-
-#text(8pt)[
-These specifications will require modification in special cases, and are only
-intended to be a general guide.
+#align(right)[SPECIFICATIONS]
+#align(right)[
+  #text(8pt)[
+    These specifications will require modification in special
+  ]
 ]
 
-#text(8pt)[
-  #table(
-    columns: 5,
-    [ ],
-    [I. \ For Extra Binding suitable for Valuable Books. Whole Leather.],
-    [
-      II. \ For Good Binding for Books of Reference, Catalogues, &c., and other
-      heavy Books that may have a great deal of use. Whole or Half Leather.
-    ],
-    [III. \ For Binding for Libraries, for Books in current use. Half Leather.],
-    [
-      IV. \ For Library Bindings of Books of little Interest or Value, Cloth or
-      Half Linen.
-    ],
+#block(height: 1fr)[
+  #text(0.80em)[
+    #table(
+      columns: 3,
+      rows: (lines(7), lines(11), lines(6), lines(2)),
 
-    [SHEETS.],
-    [
-      To be carefully folded, or, if an old book, all damaged leaves to be
-      carefully mended, the backs where damaged to be made sound.
-      Single leaves to be guarded round the sections next them.
-      All plates to be guarded. Guards to be sewn through.
-      No pasting on or overcasting to be allowed.
-    ],
-    [
-      As No. I., excepting that any mending may be done rather with a view to
-      strength than extreme neatness.
-    ],
-    [Same as No. II.],
-    [Any leaves damaged at the back or plates to be overcast into sections.],
+      [ ],
+      align(center)[
+        I. \ For Extra Binding suitable for Valuable Books. Whole Leather.
+      ],
+      align(center)[
+        II. \ For Good Binding for Books of Reference, Catalogues, &c., and other
+        heavy Books that may have a great deal of use. Whole or Half Leather.
+      ],
 
-    [END PAPERS.],
-    [
-      To be sewn on.
-      To be of good paper made with zigzag, with board papers of self\-coloured
-      paper of good quality, or vellum.
-      Or to be made with leather joint.
-    ],
-    [
-      To be of good paper made with zigzag, with board papers of self\-coloured
-      paper of good quality.
-      Large or heavy books to have a cloth joint.
-      To be sewn on.],
-    [To be of good paper, sewn on, made with zigzag.],
-    [Same as No. III.],
+      [SHEETS.],
+      [
+        To be carefully folded, or, if an old book, all damaged leaves to be
+        carefully mended, the backs where damaged to be made sound.
+        Single leaves to be guarded round the sections next them.
+        All plates to be guarded. Guards to be sewn through.
+        No pasting on or overcasting to be allowed.
+      ],
+      [
+        As No. I., excepting that any mending may be done rather with a view to
+        strength than extreme neatness.
+      ],
 
-    [PRESSING.],
-    [Books on handmade paper not to be pressed unduly.],
-    [Same as No. I.],
-    [Same as No. I.],
-    [ ],
+      [END PAPERS.],
+      [
+        To be sewn on.
+        To be of good paper made with zigzag, with board papers of self\-coloured
+        paper of good quality, or vellum.
+        Or to be made with leather joint.
+      ],
+      [
+        To be of good paper made with zigzag, with board papers of self\-coloured
+        paper of good quality.
+        Large or heavy books to have a cloth joint.
+        To be sewn on.
+      ],
 
-    [EDGES.],
-    [To be trimmed and gilt before sewing. To be uncut.],
-    [To be cut and gilt in boards or coloured, or to be uncut.],
-    [
-      To be uncut, or to be cut in guillotine and gilt or coloured, or to have
-      top edge only gilt.
-    ],
-    [May be cut smooth in guillotine.],
+      [PRESSING.],
+      [Books on handmade paper not to be pressed unduly.],
+      [Same as No. I.],
+    )
+  ]
+]
 
-    [SEWING.],
-    [To be with ligature silk, flexible, round five bands of best sewing cord.],
-    [
-      To be with unbleached thread, flexible, round five bands of best sewing
-      cord.
-    ],
-    [
-      To be with unbleached thread across not less than four unbleached linen
-      tapes.
-    ],
-    [With unbleached thread over three unbleached linen tapes.],
+//
 
-    [BACK.],
-    [
-      To be kept as flat as it can be without forcing it and without danger of
-      its becoming concave in use.
-    ],
-    [Same as for No. I.],
-    [Same as for Nos. I. and II.],
-    [Back to be left square after glueing up.
-    ],
+#pagebreak(to: "odd")
 
-    [BOARDS.],
-    [
-      To be of the best black mill\-board. Two boards to be made together for
-      large books, and all five bands laced in through two holes.
-    ],
-    [Same as No. I., or may be of good grey board.],
-    [
-      To be split grey boards, or straw\-board with black board liner, with ends
-      of tapes attached to portion of waste sheet, inserted between them.
-      Boards to be left a short distance from the joint to form a French joint.
-    ],
-    [
-      To be split boards, two straw\-boards made together and ends of slips
-      inserted.
-      French joint to be left.
-    ],
+#align(left)[FOR BOOKBINDING]
+#align(left)[
+  #par(first-line-indent: 0pt)[
+    #text(8pt)[
+      cases, and are only intended to be a general guide.
+    ]
+  ]
+]
 
-    [HEADBANDS.],
-    [
-      To be worked with silk on strips of vellum or catgut or cord, with
-      frequent tie\-downs.
-      The headbands to be “set” by pieces of good paper or leather glued at head
-      and tail.
-      The back to be lined up with leather all over if the book is large.
-    ],
-    [Same as No. I.],
-    [
-      To be worked with thread or vellum or cord, or to be omitted and a piece of
-      cord inserted into the turn in of the leather at head and tail in their
-      place.
-    ],
-    [No headbands.],
+#block(height: 1fr)[
+  #text(0.80em)[
+    #table(
+      columns: 2,
+      rows: (lines(7), lines(11), lines(6), lines(2)),
 
-    [COVERS.],
-    [
-      Goatskin (morocco), pigskin or seal\-skin manufactured according to the
-      recommendations of the Society of Arts’ Committee on Leather for
-      Bookbinding.
-      Whole binding; leather to be attached directly to the back.
-    ],
-    [
-      Same as No. I., excepting that properly prepared sheepskin may be added.
-      Half\-binding, leather only at back.
-      Corners to be strengthened with tips of vellum.
-      Sides covered with good paper or linen.
-    ],
-    [
-      Same as Nos. I. and II., but skins may be used where there are surface
-      flaws that do not affect the strength.
-      Leather to be used thicker than is usual, there being French joints.
-      Leather at back only; paper sides; vellum tips.
-    ],
-    [Whole buckram or half linen and paper sides.],
+      align(center)[
+        III. \ For Binding for Libraries, for Books in current use.
+        Half Leather.
+      ],
 
-    [LETTERING.],
-    [To be legible and to identify the volume.],
-    [Same as No. I.],
-    [Same as Nos. I. and II.],
-    [Same as Nos. I. II. and III.],
+      align(center)[
+        IV. \ For Library Bindings of Books of little Interest or Value, Cloth or
+        Half Linen.
+      ],
 
-    [DECORATION.],
-    [To be as much or as little as the nature of the book warrants.],
-    [
-      To be omitted, or only to consist of a few lines or dots or other quite
-      simple ornament.
-    ],
-    [To be omitted.],
-    [To be omitted.],
+      [Same as No. II.],
+      [Any leaves damaged at the back or plates to be overcast into sections.],
 
-    [ ],
-    [All work to be done in the best manner.],
-    [Work may be a little rougher, but not careless or dirty.],
-    [Same as No. II.],
-    [Same as No. II.],
-  )
+      [To be of good paper, sewn on, made with zigzag.],
+      [Same as No. III.],
+
+      [Same as No. I.],
+      [ ],
+    )
+  ]
+]
+
+//
+
+#pagebreak(to: "even")
+
+#align(right)[SPECIFICATIONS FOR]
+
+#block(height: 1fr)[
+  #text(0.80em)[
+    #table(
+      columns: 3,
+      rows: (lines(6), lines(3), lines(3), lines(4), lines(6)),
+
+      [ ],
+      align(center)[
+        I. \ For Extra Binding suitable for Valuable Books. Whole Leather.
+      ],
+      align(center)[
+        II. \ For Good Binding for Books of Reference, Catalogues, &c., and other
+        heavy Books that may have a great deal of use. Whole or Half Leather.
+      ],
+
+      [EDGES.],
+      [To be trimmed and gilt before sewing. To be uncut.],
+      [To be cut and gilt in boards or coloured, or to be uncut.],
+
+      [SEWING.],
+      [To be with ligature silk, flexible, round five bands of best sewing cord.],
+      [
+        To be with unbleached thread, flexible, round five bands of best sewing
+        cord.
+      ],
+
+      [BACK.],
+      [
+        To be kept as flat as it can be without forcing it and without danger of
+        its becoming concave in use.
+      ],
+      [Same as for No. I.],
+
+
+      [BOARDS.],
+      [
+        To be of the best black mill\-board. Two boards to be made together for
+        large books, and all five bands laced in through two holes.
+      ],
+      [Same as No. I., or may be of good grey board.],
+    )
+  ]
+]
+
+//
+
+#pagebreak(to: "odd")
+
+#align(left)[BOOKBINDING --- (_continued_).]
+
+#block(height: 1fr)[
+  #text(0.80em)[
+    #table(
+      columns: 2,
+      rows: (lines(6), lines(3), lines(3), lines(4), lines(6)),
+
+      align(center)[
+        III. \ For Binding for Libraries, for Books in current use.
+        Half Leather.
+      ],
+      align(center)[
+        IV. \ For Library Bindings of Books of little Interest or Value, Cloth or
+        Half Linen.
+      ],
+
+      [
+        To be uncut, or to be cut in guillotine and gilt or coloured, or to have
+        top edge only gilt.
+      ],
+      [May be cut smooth in guillotine.],
+
+      [
+        To be with unbleached thread across not less than four unbleached linen
+        tapes.
+      ],
+      [With unbleached thread over three unbleached linen tapes.],
+
+      [Same as for Nos. I. and II.],
+      [Back to be left square after glueing up.],
+
+      [
+        To be split grey boards, or straw\-board with black board liner, with ends
+        of tapes attached to portion of waste sheet, inserted between them.
+        Boards to be left a short distance from the joint to form a French joint.
+      ],
+      [
+        To be split boards, two straw\-boards made together and ends of slips
+        inserted.
+        French joint to be left.
+      ],
+    )
+  ]
+]
+
+//
+
+#pagebreak(to: "even")
+
+#align(right)[SPECIFICATIONS FOR]
+
+#block(height: 1fr)[
+  #text(0.80em)[
+    #table(
+      columns: 3,
+      rows: (lines(7), lines(9), lines(9), lines(2)),
+
+      [ ],
+      align(center)[
+        I. \ For Extra Binding suitable for Valuable Books. Whole Leather.
+      ],
+      align(center)[
+        II. \ For Good Binding for Books of Reference, Catalogues, &c., and other
+        heavy Books that may have a great deal of use. Whole or Half Leather.
+      ],
+
+      [HEADBANDS.],
+      [
+        To be worked with silk on strips of vellum or catgut or cord, with
+        frequent tie\-downs.
+        The headbands to be “set” by pieces of good paper or leather glued at head
+        and tail.
+        The back to be lined up with leather all over if the book is large.
+      ],
+      [Same as No. I.],
+
+      [COVERS.],
+      [
+        Goatskin (morocco), pigskin or seal\-skin manufactured according to the
+        recommendations of the Society of Arts’ Committee on Leather for
+        Bookbinding.
+        Whole binding; leather to be attached directly to the back.
+      ],
+      [
+        Same as No. I., excepting that properly prepared sheepskin may be added.
+        Half\-binding, leather only at back.
+        Corners to be strengthened with tips of vellum.
+        Sides covered with good paper or linen.
+      ],
+
+      [LETTERING.],
+      [To be legible and to identify the volume.],
+      [Same as No. I.],
+    )
+  ]
+]
+
+//
+
+#pagebreak(to: "odd")
+
+#align(left)[BOOKBINDING --- (_continued_).]
+
+#block(height: 1fr)[
+  #text(0.80em)[
+    #table(
+      columns: 2,
+      rows: (lines(7), lines(9), lines(9), lines(2)),
+
+      align(center)[
+        III. \ For Binding for Libraries, for Books in current use.
+        Half Leather.
+      ],
+      align(center)[
+        IV. \ For Library Bindings of Books of little Interest or Value, Cloth or
+        Half Linen.
+      ],
+
+      [
+        To be worked with thread or vellum or cord, or to be omitted and a piece of
+        cord inserted into the turn in of the leather at head and tail in their
+        place.
+      ],
+      [No headbands.],
+
+      [
+        Same as Nos. I. and II., but skins may be used where there are surface
+        flaws that do not affect the strength.
+        Leather to be used thicker than is usual, there being French joints.
+        Leather at back only; paper sides; vellum tips.
+      ],
+      [Whole buckram or half linen and paper sides.],
+
+      [Same as Nos. I. and II.],
+      [Same as Nos. I. II. and III.],
+    )
+  ]
+]
+
+//
+
+#pagebreak(to: "even")
+
+#align(right)[SPECIFICATIONS FOR]
+
+#block(height: 1fr)[
+  #text(0.80em)[
+    #table(
+      columns: 3,
+      rows: (lines(7), lines(4), lines(3)),
+
+      [ ],
+      align(center)[
+        I. \ For Extra Binding suitable for Valuable Books. Whole Leather.
+      ],
+      align(center)[
+        II. \ For Good Binding for Books of Reference, Catalogues, &c., and other
+        heavy Books that may have a great deal of use. Whole or Half Leather.
+      ],
+
+      [DECORATION.],
+      [To be as much or as little as the nature of the book warrants.],
+      [
+        To be omitted, or only to consist of a few lines or dots or other quite
+        simple ornament.
+      ],
+
+      [ ],
+      [All work to be done in the best manner.],
+      [Work may be a little rougher, but not careless or dirty.],
+    )
+  ]
+]
+
+//
+
+#pagebreak(to: "odd")
+
+#align(left)[BOOKBINDING --- (_continued_).]
+
+#block(height: 1fr)[
+  #text(0.80em)[
+    #table(
+      columns: 2,
+      rows: (lines(7), lines(4), lines(3)),
+
+      align(center)[
+        III. \ For Binding for Libraries, for Books in current use.
+        Half Leather.
+      ],
+      align(center)[
+        IV. \ For Library Bindings of Books of little Interest or Value, Cloth or
+        Half Linen.
+      ],
+
+      [To be omitted.],
+      [To be omitted.],
+
+      [Same as No. II.],
+      [Same as No. II.],
+    )
+  ]
 ]
 
 //
@@ -7118,6 +7347,7 @@ intended to be a general guide.
 
 #emph[Arming press], a small blocking press used for striking arms\-blocks on
 the sides of books.
+#index[Arming press]
 
 #emph[Backing boards], wedge\-shaped bevelled boards used in backing (see
 @fig40).
@@ -7125,7 +7355,7 @@ the sides of books.
 #emph[Backing machine], used for backing cheap work in large quantities; it
 often crushes and damages the backs of the sections.
 
-#emph[Bands], (1) the cords on which a book is sewn.
+#emph[Bands], #index[Bands] (1) the cords on which a book is sewn.
 (2) The ridges on the back caused by the bands showing through the leather.
 
 #emph[Band nippers], pincers with flat jaws, used for straightening the bands
@@ -7329,16 +7559,159 @@ receive the board.
 
 #heading(level: 2)[REPRODUCTIONS OF BINDINGS]<reproduction-of-bindings>
 
-// TODO
+#align(center)[
+  #smallcaps[I., II., and III.]
 
-#metadata("")<reproduction1>
-#metadata("")<reproduction2>
-#metadata("")<reproduction3>
-#metadata("")<reproduction4>
-#metadata("")<reproduction5>
-#metadata("")<reproduction6>
-#metadata("")<reproduction7>
-#metadata("")<reproduction8>
+  #smallcaps[Fifteenth Century Blind-Tooled Bindings]
+
+  \
+
+  #smallcaps[IV.]
+
+  #smallcaps[Sixteenth Century Binding with Simple \ Gold\-Tooling]
+
+  \
+
+  #smallcaps[V., VI., VII., and VIII.]
+
+  #smallcaps[Modern Bindings Designed by the Author]
+]
+
+//
+
+#pagebreak()
+
+#align(center)[
+  #figure(
+    image(
+      "assets/plate01.jpg",
+      fit: "contain",
+      alt: "I. — German Fifteenth Century.  Pigskin.  Actual size, 8¾″ × 6¼″.",
+      height: 93%,
+    ),
+    supplement: [],
+    caption: [I. — German Fifteenth Century.  Pigskin.  Actual size, 8¾″ × 6¼″.],
+  )<reproduction1>
+]
+
+//
+
+#pagebreak()
+
+#align(center)[
+  #figure(
+    image(
+      "assets/plate02.jpg",
+      fit: "contain",
+      alt: "II. — German Fifteenth Century. Calf. Actual size 12½″ × 8½″",
+      height: 93%,
+    ),
+    supplement: [],
+    caption: [II. — German Fifteenth Century. Calf. Actual size 12½″ × 8½″],
+  )<reproduction2>
+]
+
+//
+
+#pagebreak()
+
+#align(center)[
+  #figure(
+    image(
+      "assets/plate03.jpg",
+      fit: "contain",
+      alt: "III. — Italian Fifteenth Century. Sheepskin, with coloured roundels. Actual size, 11½″ × 8¼″.",
+      height: 93%,
+    ),
+    supplement: [],
+    caption: [III. — Italian Fifteenth Century. Sheepskin, with coloured roundels. Actual size, 11½″ × 8¼″.],
+  )<reproduction3>
+]
+
+//
+
+#pagebreak()
+
+#align(center)[
+  #figure(
+    image(
+      "assets/plate04.jpg",
+      fit: "contain",
+      alt: "IV. — Italian Sixteenth Century. Actual size, 12½″ × 8½″. Goatskin.",
+      height: 93%,
+    ),
+    supplement: [],
+    caption: [IV. — Italian Sixteenth Century. Actual size, 12½″ × 8½″. Goatskin.],
+  )<reproduction4>
+]
+
+//
+
+#pagebreak()
+
+#align(center)[
+  #figure(
+    image(
+      "assets/plate05.jpg",
+      fit: "contain",
+      alt: "V. — Half Niger morocco, with sides of English oak. Actual size, 17″ × 11½″.",
+      height: 93%,
+    ),
+    supplement: [],
+    caption: [V. — Half Niger morocco, with sides of English oak. Actual size, 17″ × 11½″.],
+  )<reproduction5>
+]
+
+//
+
+#pagebreak()
+
+#align(center)[
+  #figure(
+    image(
+      "assets/plate06.jpg",
+      fit: "contain",
+      alt: "VI. — Niger morocco, inlaid green leaves. Actual size, 8¼″ × 5½″.",
+      height: 93%,
+    ),
+    supplement: [],
+    caption: [VI. — Niger morocco, inlaid green leaves. Actual size, 8¼″ × 5½″.],
+  )<reproduction6>
+]
+
+//
+
+#pagebreak()
+
+#align(center)[
+  #figure(
+    image(
+      "assets/plate07.jpg",
+      fit: "contain",
+      alt: "VII. — Green levant, inlaid with lighter green panel and red dots. Actual size, 6¾″ × 4½″.",
+      height: 93%,
+    ),
+    supplement: [],
+    caption: [VII. — Green levant, inlaid with lighter green panel and red dots. Actual size, 6¾″ × 4½″.],
+  )<reproduction7>
+]
+
+//
+
+#pagebreak()
+
+#align(center)[
+  #figure(
+    image(
+      "assets/plate08.jpg",
+      fit: "contain",
+      alt: "VIII. — Niger morocco, executed by a student of the Central School of Arts and Crafts. Actual size, 11¾″ × 9¼″.",
+      height: 93%,
+    ),
+    supplement: [],
+    caption: [VIII. — Niger morocco, executed by a student of the Central School of Arts and Crafts. Actual size, 11¾″ × 9¼″.],
+  )<reproduction8>
+]
 
 //
 
@@ -7346,4 +7719,8 @@ receive the board.
 
 #heading(level: 2)[INDEX]<index>
 
-// TODO
+#show heading: it => [#v(1em)]
+
+#columns(2)[
+  #make-index()
+]
